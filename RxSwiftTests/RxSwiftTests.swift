@@ -23,7 +23,7 @@ class RxSwiftTests: XCTestCase {
     }
     
     func testExample() {
-        let a = Observable<Observer<String>>.just("test")
+        let a = Observable<String>.just("test")
         let b = map(a) {
             $0 + "1"
         }

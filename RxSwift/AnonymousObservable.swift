@@ -9,18 +9,16 @@
 import Foundation
 
 // MARK: internal
-internal final class AnonymousObservable<T: IObserver>: ObservableBase<T> {
-    typealias Subscribe = T -> IDisposable?
-    
-    init(_ subscribe: Subscribe) {
-        _subscribe = subscribe
+public final class AnonymousObservable<T>: ObservableBase<T> {
+    public init<TObserver: IObserver where TObserver.Value == Value>(_ subscribe: TObserver -> IDisposable?) {
+        _subscribe = subscribe as! AnyObject -> IDisposable?
         super.init()
     }
     
-    override func subscribeCore(observer: T) -> IDisposable? {
+    override func subscribeCore<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
         return _subscribe(observer)
     }
     
     // MARK: private
-    private let _subscribe: Subscribe
+    private let _subscribe: AnyObject -> IDisposable?
 }

@@ -9,49 +9,20 @@
 import Foundation
 
 // MARK: internal
-internal final class AnonymousObserver<T>: Observer<T> {
-    typealias Next = T -> ()
-    typealias Error = NSError -> ()
-    typealias Completed = () -> ()
-    
-    init(_ onNext: Next, _ onError: Error, _ onCompleted: Completed) {
-        println("\(__FUNCTION__)")
-        _next = onNext
-        _error = onError
-        _completed = onCompleted
+public final class AnonymousObserver<T>: ObserverBase<T> {
+    public override init(_ next: Value -> (), _ error: NSError -> (), _ completed: () -> ()) {
+        super.init(next, error, completed)
     }
     
-    convenience init(_ onNext: Next) {
-        self.init(onNext, {_ in}, {})
+    public convenience init(_ next: Value -> ()) {
+        self.init(next, {_ in}, {})
     }
     
-    convenience init(_ onNext: Next, _ onError: Error) {
-        self.init(onNext, onError, {})
+    public convenience init(_ next: Value -> (), _ error: NSError -> ()) {
+        self.init(next, error, {})
     }
     
-    convenience init(_ onNext: Next, _ onCompleted: Completed) {
-        self.init(onNext, {_ in}, onCompleted)
+    public convenience init(_ next: Value -> (), _ completed: () -> ()) {
+        self.init(next, {_ in}, completed)
     }
-    
-    deinit {
-        println("\(__FUNCTION__)")
-    }
-    
-    // MARK: override Observer
-    override func next(value: T) {
-        _next(value)
-    }
-    
-    override func error(error: NSError) {
-        _error(error)
-    }
-    
-    override func completed() {
-        _completed()
-    }
-    
-    // MARK: private
-    private var _next: Next
-    private var _error: Error
-    private var _completed: Completed
 }

@@ -9,30 +9,23 @@
 import Foundation
 
 public protocol IObservable: class {
-    typealias ObserverType: IObserver
-    func subscribe(observer: ObserverType) -> IDisposable?
+    typealias Value
+    func subscribe<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable?
 }
 
-public class Observable<T: IObserver>: IObservable {
+/**
+*  Abstract base class of IObservable
+*/
+public class Observable<T>: IObservable {
     // MARK: IObservable
-    public typealias ObserverType = T
+    typealias Value = T
     
-    public func subscribe(observer: ObserverType) -> IDisposable? {
-        return _subscribeSelf(self, observer)
+    public func subscribe<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+        fatalError("Abstract method \(__FUNCTION__)")
     }
-    
-    // MARK: public
-    public typealias Value = ObserverType.Value
     
     // MARK: internal
-    internal typealias SubscribeSelf = (Observable, ObserverType) -> IDisposable?
-    
-    internal init(_ subscribeSelf: SubscribeSelf) {
-        _subscribeSelf = subscribeSelf
-    }
-    
-    /// MARK: private
-    private let _subscribeSelf: SubscribeSelf
+    init() {}
 }
 
 // MARK: - Extensions
@@ -44,21 +37,20 @@ public class Observable<T: IObserver>: IObservable {
 // MARK: subscribe
 
 public extension Observable {
-    
     public func subscribe(onNext: Value -> ()) -> IDisposable? {
-        return subscribe(AnonymousObserver(onNext) as! ObserverType)
+        return subscribe(AnonymousObserver(onNext))
     }
     
     public func subscribe(onNext: Value -> (), _ onError: NSError -> ()) -> IDisposable? {
-        return subscribe(AnonymousObserver(onNext, onError) as! ObserverType)
+        return subscribe(AnonymousObserver(onNext, onError))
     }
     
     public func subscribe(onNext: Value -> (), _ onCompleted: () -> ()) -> IDisposable? {
-        return subscribe(AnonymousObserver(onNext, onCompleted) as! ObserverType)
+        return subscribe(AnonymousObserver(onNext, onCompleted))
     }
     
     public func subscribe(onNext: Value -> (), _ onError: NSError -> (), _ onCompleted: () -> ()) -> IDisposable? {
-        return subscribe(AnonymousObserver(onNext, onError, onCompleted) as! ObserverType)
+        return subscribe(AnonymousObserver(onNext, onError, onCompleted))
     }
 }
 
@@ -72,7 +64,7 @@ public extension Observable {
     
     :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func map<TResult>(selector: Value -> TResult) -> Observable<Observer<TResult>> {
+    public func map<TResult>(selector: Value -> TResult) -> Observable<TResult> {
         return _map(self, selector)
     }
     
@@ -83,7 +75,7 @@ public extension Observable {
     
     :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func select<TResult>(selector: (Value, Int) -> TResult) -> Observable<Observer<TResult>> {
+    public func select<TResult>(selector: (Value, Int) -> TResult) -> Observable<TResult> {
         return _select(self, selector)
     }
 }
@@ -122,4 +114,11 @@ public extension Observable {
     public class func returnValue(value: Value, scheduler: IScheduler) -> Observable {
         return _just(value, scheduler: scheduler)
     }
+}
+
+func subscribeSafe<TObservable: IObservable, TObserver: IObserver where TObservable.Value == TObserver.Value>(observable: TObservable, observer: TObserver) -> IDisposable? {
+    if let producer = observable as? Producer<TObservable.Value> {
+        return producer.subscribeRaw(observer)
+    }
+    return observable.subscribe(observer)
 }

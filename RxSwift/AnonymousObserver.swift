@@ -10,19 +10,36 @@ import Foundation
 
 // MARK: internal
 public final class AnonymousObserver<T>: ObserverBase<T> {
-    public override init(_ next: Value -> (), _ error: NSError -> (), _ completed: () -> ()) {
-        super.init(next, error, completed)
+    public init(_ next: Input -> (), _ error: NSError -> (), _ completed: () -> ()) {
+        _observer = ObserverOf(nil, next, error, completed)
     }
     
-    public convenience init(_ next: Value -> ()) {
+    public convenience init(_ next: Input -> ()) {
         self.init(next, {_ in}, {})
     }
     
-    public convenience init(_ next: Value -> (), _ error: NSError -> ()) {
+    public convenience init(_ next: Input -> (), _ error: NSError -> ()) {
         self.init(next, error, {})
     }
     
-    public convenience init(_ next: Value -> (), _ completed: () -> ()) {
+    public convenience init(_ next: Input -> (), _ completed: () -> ()) {
         self.init(next, {_ in}, completed)
     }
+    
+    // MARK: private
+    override func onNextCore(value: Input) {
+        _observer.onNext(value)
+    }
+    
+    override func onErrorCore(error: NSError) {
+        _observer.onError(error)
+        dispose()
+    }
+    
+    override func onCompletedCore() {
+        _observer.onCompleted()
+        dispose()
+    }
+    
+    private let _observer: ObserverOf<T>
 }

@@ -9,18 +9,18 @@
 import Foundation
 
 public protocol IProducer: IObservable {
-    func subscribeRaw<TObserver : IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable?
+    func subscribeRaw<TObserver : IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable?
 }
 
 public class Producer<T>: Observable<T>, IProducer {
     // MARK: IObservable
-    typealias Value = T
+    typealias Output = T
     
-    public override func subscribe<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+    public override func subscribe<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         return subscribeRaw(observer)
     }
     
-    public func subscribeRaw<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+    public func subscribeRaw<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         var state = State(observer)
         
         var d = CompositeDisposable(state.sink, state.subscription)
@@ -40,12 +40,12 @@ public class Producer<T>: Observable<T>, IProducer {
     }
     
     // MARK: internal
-    internal func run<TObserver: IObserver where TObserver.Value == Value>(scheduler: IScheduler, x: State<TObserver>) -> IDisposable? {
+    internal func run<TObserver: IObserver where TObserver.Input == Output>(scheduler: IScheduler, x: State<TObserver>) -> IDisposable? {
         x.subscription.disposable = run(x.observer, cancel: x.subscription, setSink: x.assign())
         return nil
     }
     
-    internal func run<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
+    internal func run<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
         fatalError("Abstract method \(__FUNCTION__)")
     }
 }

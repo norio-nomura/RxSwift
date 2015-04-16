@@ -8,14 +8,6 @@
 
 import Foundation
 
-public protocol IDisposable: class {
-    func dispose()
-}
-
-public protocol ICancelable: IDisposable {
-    var isDisposed: Bool {get}
-}
-
 public struct Disposable {
     public static func create(action: () -> ()) -> IDisposable {
         return AnonymousDisposable(action)

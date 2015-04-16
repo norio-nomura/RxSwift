@@ -10,6 +10,10 @@
 		6C2201EC1ADF6D84005924ED /* Just.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C1A12A41ACCBF1300CACC82 /* Just.swift */; };
 		6C2201ED1ADF7120005924ED /* Select.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCD1A191ACC38CC0075F15C /* Select.swift */; };
 		6C2201EF1ADF74FB005924ED /* ObservableOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201EE1ADF74FB005924ED /* ObservableOf.swift */; };
+		6C2201F31ADF9660005924ED /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F21ADF9660005924ED /* Subject.swift */; };
+		6C2201F61ADFADD8005924ED /* IObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F51ADFADD8005924ED /* IObserver.swift */; };
+		6C2201F81ADFB24A005924ED /* IObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F71ADFB24A005924ED /* IObservable.swift */; };
+		6C2201FA1ADFB30A005924ED /* IDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F91ADFB30A005924ED /* IDisposable.swift */; };
 		6C56645F1ADE8CDC0081408F /* ObserverOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C56645E1ADE8CDC0081408F /* ObserverOf.swift */; };
 		6C577FC51ADB4B7C000CFCB9 /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FC41ADB4B7C000CFCB9 /* Scheduler.swift */; };
 		6C577FC91ADB6D6A000CFCB9 /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FC81ADB6D6A000CFCB9 /* ImmediateScheduler.swift */; };
@@ -50,6 +54,10 @@
 /* Begin PBXFileReference section */
 		6C1A12A41ACCBF1300CACC82 /* Just.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Just.swift; sourceTree = "<group>"; };
 		6C2201EE1ADF74FB005924ED /* ObservableOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableOf.swift; sourceTree = "<group>"; };
+		6C2201F21ADF9660005924ED /* Subject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Subject.swift; sourceTree = "<group>"; };
+		6C2201F51ADFADD8005924ED /* IObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IObserver.swift; sourceTree = "<group>"; };
+		6C2201F71ADFB24A005924ED /* IObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IObservable.swift; sourceTree = "<group>"; };
+		6C2201F91ADFB30A005924ED /* IDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDisposable.swift; sourceTree = "<group>"; };
 		6C56645E1ADE8CDC0081408F /* ObserverOf.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverOf.swift; sourceTree = "<group>"; };
 		6C577FC41ADB4B7C000CFCB9 /* Scheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.swift; sourceTree = "<group>"; };
 		6C577FC81ADB6D6A000CFCB9 /* ImmediateScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImmediateScheduler.swift; sourceTree = "<group>"; };
@@ -102,6 +110,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		6C2201F11ADF961E005924ED /* Subjects */ = {
+			isa = PBXGroup;
+			children = (
+				6C2201F21ADF9660005924ED /* Subject.swift */,
+			);
+			path = Subjects;
+			sourceTree = "<group>";
+		};
+		6C2201F41ADFADB4005924ED /* Interfaces */ = {
+			isa = PBXGroup;
+			children = (
+				6C2201F51ADFADD8005924ED /* IObserver.swift */,
+				6C2201F71ADFB24A005924ED /* IObservable.swift */,
+				6C2201F91ADFB30A005924ED /* IDisposable.swift */,
+			);
+			path = Interfaces;
+			sourceTree = "<group>";
+		};
 		6C577FC31ADB4B33000CFCB9 /* Concurrency */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,6 +205,7 @@
 		6CDDF74C1ACBE5F300C16A79 /* RxSwift */ = {
 			isa = PBXGroup;
 			children = (
+				6C2201F41ADFADB4005924ED /* Interfaces */,
 				6C577FC31ADB4B33000CFCB9 /* Concurrency */,
 				6CA6F2231ADD17D0001C5D6C /* Disposable */,
 				6CCD1A181ACC38990075F15C /* Linq */,
@@ -190,6 +217,7 @@
 				6CDDF7691ACBE60600C16A79 /* Rx.swift */,
 				6CDDF74F1ACBE5F300C16A79 /* RxSwift.h */,
 				6C8685F61AD52E03009A86F3 /* Internal */,
+				6C2201F11ADF961E005924ED /* Subjects */,
 				6CDDF74D1ACBE5F300C16A79 /* Supporting Files */,
 			);
 			path = RxSwift;
@@ -340,14 +368,18 @@
 				6C2201EF1ADF74FB005924ED /* ObservableOf.swift in Sources */,
 				6CDDF76D1ACBE60600C16A79 /* ObserverBase.swift in Sources */,
 				6C8685FA1AD52EA1009A86F3 /* AnonymousObservable.swift in Sources */,
+				6C2201F61ADFADD8005924ED /* IObserver.swift in Sources */,
 				6CA9596A1ADE4B030024262D /* ObservableBase.swift in Sources */,
+				6C2201F81ADFB24A005924ED /* IObservable.swift in Sources */,
 				6C5DD0551ADE5C6C00FEC7BB /* Sink.swift in Sources */,
+				6C2201F31ADF9660005924ED /* Subject.swift in Sources */,
 				6C577FCE1ADBC38D000CFCB9 /* AsyncLock.swift in Sources */,
 				6CA6F2271ADD181B001C5D6C /* CompositeDisposable.swift in Sources */,
 				6C577FD41ADC0142000CFCB9 /* Stopwatch.swift in Sources */,
 				6C577FC91ADB6D6A000CFCB9 /* ImmediateScheduler.swift in Sources */,
 				6C577FCB1ADBBF76000CFCB9 /* SpinLock.swift in Sources */,
 				6CA6F22B1ADD1935001C5D6C /* AnonymousDisposable.swift in Sources */,
+				6C2201FA1ADFB30A005924ED /* IDisposable.swift in Sources */,
 				6C8685F91AD52EA1009A86F3 /* AnonymousObserver.swift in Sources */,
 				6CA6F2291ADD1845001C5D6C /* Utils.swift in Sources */,
 				6C2201EC1ADF6D84005924ED /* Just.swift in Sources */,

@@ -20,14 +20,8 @@ internal final class AutoDetachObserver<T>: ObserverBase<T> {
         }
     }
     
-    init<TObserver: IObserver where TObserver.Value == Value>(_ observer: TObserver) {
+    init<TObserver: IObserver where TObserver.Input == Input>(_ observer: TObserver) {
         _observer = ObserverOf(observer)
-        super.init(
-            AutoDetachObserver.nextImpl as! BindNext,
-            AutoDetachObserver.errorImpl as! BindError,
-            AutoDetachObserver.completedImpl as! BindCompleted,
-            AutoDetachObserver.disposeImpl as! BindDispose
-        )
     }
     
     deinit {
@@ -35,22 +29,25 @@ internal final class AutoDetachObserver<T>: ObserverBase<T> {
     }
     
     // MARK: private
-    func nextImpl(value: T) {
+    override func onNextCore(value: Input) {
         _observer.onNext(value)
     }
     
-    func errorImpl(error: NSError) {
+    override func onErrorCore(error: NSError) {
         _observer.onError(error)
         dispose()
     }
     
-    func completedImpl() {
+    override func onCompletedCore() {
         _observer.onCompleted()
         dispose()
     }
     
-    func disposeImpl() {
-        disposable?.dispose()
+    override func dispose(disposing: Bool) {
+        super.dispose(disposing)
+        if disposing {
+            disposable?.dispose()
+        }
     }
     
     private let _observer: ObserverOf<T>

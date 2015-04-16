@@ -10,12 +10,12 @@ import Foundation
 
 // MARK: internal
 public final class AnonymousObservable<T>: ObservableBase<T> {
-    public init<TObserver: IObserver where TObserver.Value == Value>(_ subscribe: TObserver -> IDisposable?) {
+    public init<TObserver: IObserver where TObserver.Input == Output>(_ subscribe: TObserver -> IDisposable?) {
         _subscribe = subscribe as! AnyObject -> IDisposable?
         super.init()
     }
     
-    override func subscribeCore<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+    override func subscribeCore<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         return _subscribe(observer)
     }
     

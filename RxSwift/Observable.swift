@@ -8,24 +8,19 @@
 
 import Foundation
 
-public protocol IObservable: class {
-    typealias Value
-    func subscribe<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable?
-}
-
 /**
 *  Abstract base class of IObservable
 */
 public class Observable<T>: IObservable {
     // MARK: IObservable
-    typealias Value = T
+    typealias Output = T
     
-    public func subscribe<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+    public func subscribe<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         fatalError("Abstract method \(__FUNCTION__)")
     }
     
     // MARK: internal
-    init() {}
+//    init() {}
 }
 
 // MARK: - Extensions
@@ -37,19 +32,19 @@ public class Observable<T>: IObservable {
 // MARK: subscribe
 
 public extension Observable {
-    public func subscribe(onNext: Value -> ()) -> IDisposable? {
+    public func subscribe(onNext: Output -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext))
     }
     
-    public func subscribe(onNext: Value -> (), _ onError: NSError -> ()) -> IDisposable? {
+    public func subscribe(onNext: Output -> (), _ onError: NSError -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext, onError))
     }
     
-    public func subscribe(onNext: Value -> (), _ onCompleted: () -> ()) -> IDisposable? {
+    public func subscribe(onNext: Output -> (), _ onCompleted: () -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext, onCompleted))
     }
     
-    public func subscribe(onNext: Value -> (), _ onError: NSError -> (), _ onCompleted: () -> ()) -> IDisposable? {
+    public func subscribe(onNext: Output -> (), _ onError: NSError -> (), _ onCompleted: () -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext, onError, onCompleted))
     }
 }
@@ -64,7 +59,7 @@ public extension Observable {
     
     :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func map<TResult>(selector: Value -> TResult) -> Observable<TResult> {
+    public func map<TResult>(selector: Output -> TResult) -> Observable<TResult> {
         return _map(self, selector)
     }
     
@@ -75,7 +70,7 @@ public extension Observable {
     
     :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func select<TResult>(selector: (Value, Int) -> TResult) -> Observable<TResult> {
+    public func select<TResult>(selector: (Output, Int) -> TResult) -> Observable<TResult> {
         return _select(self, selector)
     }
 }
@@ -91,11 +86,11 @@ public extension Observable {
     
     :returns: An observable sequence containing the single specified element.
     */
-    public class func just(value: Value) -> Observable {
+    public class func just(value: Output) -> Observable {
         return _just(value)
     }
     
-    public class func returnValue(value: Value) -> Observable {
+    public class func returnValue(value: Output) -> Observable {
         return _just(value)
     }
     
@@ -107,17 +102,17 @@ public extension Observable {
     
     :returns: An observable sequence containing the single specified element.
     */
-    public class func just(value: Value, scheduler: IScheduler) -> Observable {
+    public class func just(value: Output, scheduler: IScheduler) -> Observable {
         return _just(value, scheduler: scheduler)
     }
     
-    public class func returnValue(value: Value, scheduler: IScheduler) -> Observable {
+    public class func returnValue(value: Output, scheduler: IScheduler) -> Observable {
         return _just(value, scheduler: scheduler)
     }
 }
 
-func subscribeSafe<TObservable: IObservable, TObserver: IObserver where TObservable.Value == TObserver.Value>(observable: TObservable, observer: TObserver) -> IDisposable? {
-    if let producer = observable as? Producer<TObservable.Value> {
+func subscribeSafe<TObservable: IObservable, TObserver: IObserver where TObservable.Output == TObserver.Input>(observable: TObservable, observer: TObserver) -> IDisposable? {
+    if let producer = observable as? Producer<TObservable.Output> {
         return producer.subscribeRaw(observer)
     }
     return observable.subscribe(observer)

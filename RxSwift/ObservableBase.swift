@@ -10,18 +10,18 @@ import Foundation
 
 // MARK: internal
 internal class ObservableBase<T>: Observable<T> {
-    override func subscribe<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+    override func subscribe<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         var ado = AutoDetachObserver(observer)
         Scheduler.immediate.schedule(ado, action: scheduledSubscribe)
         return ado
     }
     
-    func subscribeCore<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver) -> IDisposable? {
+    func subscribeCore<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         fatalError("Abstract method \(__FUNCTION__)")
     }
     
     // MARK: private
-    private func scheduledSubscribe(scheduler: IScheduler, autoDetachObserver: AutoDetachObserver<T>) -> IDisposable? {
+    private func scheduledSubscribe(scheduler: IScheduler, autoDetachObserver: AutoDetachObserver<Output>) -> IDisposable? {
         autoDetachObserver.disposable = subscribeCore(autoDetachObserver)
         return nil
     }

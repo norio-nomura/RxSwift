@@ -8,8 +8,3 @@
 
 import Foundation
 
-public protocol ISubject: class, IObserver, IObservable {
-//    typealias Value
-//    typealias ObserverType
-}
-

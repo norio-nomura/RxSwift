@@ -59,7 +59,7 @@ internal class Just<TResult>: Producer<TResult> {
         self.scheduler = scheduler
     }
     
-    internal override func run<TObserver: IObserver where TObserver.Value == Value>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
+    internal override func run<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
         var sink = JustSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
@@ -72,7 +72,7 @@ internal class Just<TResult>: Producer<TResult> {
 private class JustSink<TResult>: Sink<TResult> {
     let parent: Just<TResult>
     
-    init<TObserver : IObserver where TObserver.Value == TResult>(parent: Just<TResult>, observer: TObserver, cancel: IDisposable?) {
+    init<TObserver : IObserver where TObserver.Input == TResult>(parent: Just<TResult>, observer: TObserver, cancel: IDisposable?) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }

@@ -62,7 +62,7 @@ internal final class Select<TSource, TResult>: Producer<TResult> {
         self.selectorI = selectorI
     }
     
-    override func run<TObserver : IObserver where TObserver.Value == Value>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
+    override func run<TObserver : IObserver where TObserver.Input == Output>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
         if let selector = selector {
             var sink = SelectSink(parent: self, observer: observer, cancel: cancel)
             setSink(sink)
@@ -78,14 +78,14 @@ internal final class Select<TSource, TResult>: Producer<TResult> {
 }
 
 internal final class SelectSink<TSource, TResult>: Sink<TResult>, IObserver {
-    typealias Value = TSource
+    typealias Input = TSource
     
-    init<TObserver : IObserver where TObserver.Value == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
+    init<TObserver : IObserver where TObserver.Input == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
-    func onNext(value: Value) {
+    func onNext(value: Input) {
         var result = parent.selector!(value)
         observer?.onNext(result)
     }
@@ -105,14 +105,14 @@ internal final class SelectSink<TSource, TResult>: Sink<TResult>, IObserver {
 }
 
 internal final class SelectISink<TSource, TResult>: Sink<TResult>, IObserver {
-    typealias Value = TSource
+    typealias Input = TSource
     
-    init<TObserver : IObserver where TObserver.Value == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
+    init<TObserver : IObserver where TObserver.Input == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
         self.parent = parent
         super.init(observer: observer, cancel: cancel)
     }
     
-    func onNext(value: Value) {
+    func onNext(value: Input) {
         var result = parent.selectorI!(value, index++)
         observer?.onNext(result)
     }

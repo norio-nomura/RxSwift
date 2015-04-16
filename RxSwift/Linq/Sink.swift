@@ -9,7 +9,7 @@
 import Foundation
 
 internal class Sink<TSource>: IDisposable {
-    init<TObserver: IObserver where TObserver.Value == TSource>(observer: TObserver, cancel: IDisposable?) {
+    init<TObserver: IObserver where TObserver.Input == TSource>(observer: TObserver, cancel: IDisposable?) {
         self.observer = ObserverOf(observer)
         self.cancel = cancel
     }
@@ -24,7 +24,7 @@ internal class Sink<TSource>: IDisposable {
         cancel?.dispose()
     }
     
-    func getForwarder<TObserver: IObserver where TObserver.Value == TSource>() -> TObserver {
+    func getForwarder<TObserver: IObserver where TObserver.Input == TSource>() -> TObserver {
         return Forwarder<TSource>(self) as! TObserver
     }
     
@@ -35,14 +35,14 @@ internal class Sink<TSource>: IDisposable {
 }
 
 internal final class Forwarder<TSource>: IObserver {
-    typealias Value = TSource
+    typealias Input = TSource
     let forward: Sink<TSource>
 
     init(_ forward: Sink<TSource>) {
         self.forward = forward
     }
     
-    func onNext(value: Value) {
+    func onNext(value: Input) {
         forward.observer?.onNext(value)
     }
     

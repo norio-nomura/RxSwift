@@ -9,10 +9,10 @@
 import Foundation
 
 internal class ObserverOf<T>: IObserver {
-    typealias Value = T
+    typealias Input = T
     
     // MARK: IObserver
-    func onNext(value: Value) {
+    func onNext(value: Input) {
         _next(value)
     }
     
@@ -26,33 +26,35 @@ internal class ObserverOf<T>: IObserver {
     
     // MARK: internal
     init() {
-        
+        objectIdentifier = ObjectIdentifier(self)
     }
     
-    init(_ next: Value -> (), _ error: NSError -> (), _ completed: () -> ()) {
+    init(_ identifierObject: AnyObject?, _ next: Input -> (), _ error: NSError -> (), _ completed: () -> ()) {
         _next = next
         _error = error
         _completed = completed
+        objectIdentifier = ObjectIdentifier(identifierObject ?? self)
     }
     
-    convenience init<TObserver: IObserver where TObserver.Value == Value>(_ observer: TObserver) {
-        self.init(observer.onNext, observer.onError, observer.onCompleted)
+    convenience init<TObserver: IObserver where TObserver.Input == Input>(_ observer: TObserver) {
+        self.init(nil, observer.onNext, observer.onError, observer.onCompleted)
     }
     
     // MARK: private
-    private var _next: Value -> () = {_ in}
+    private var _next: Input -> () = {_ in}
     private var _error: NSError -> () = {_ in}
     private var _completed: () -> () = {}
+    private var objectIdentifier: ObjectIdentifier?
 }
 
 internal class WeakObserverOf<T>: ObserverOf<T> {
-    init<TObserver: IObserver where TObserver.Value == Value>(
+    init<TObserver: IObserver where TObserver.Input == Input>(
         _ observer: TObserver,
-        _ bindNext: TObserver -> Value -> (),
+        _ bindNext: TObserver -> Input -> (),
         _ bindError: TObserver -> NSError -> (),
         _ bindCompleted: TObserver -> () -> ())
     {
-        super.init({ [weak observer] in
+        super.init(observer, { [weak observer] in
             if let b = observer {
                 bindNext(b)($0)
             }
@@ -66,4 +68,11 @@ internal class WeakObserverOf<T>: ObserverOf<T> {
             }
         })
     }
+}
+
+extension ObserverOf: Equatable {
+}
+
+func == <T>(lhs: ObserverOf<T>, rhs: ObserverOf<T>) -> Bool {
+    return lhs.objectIdentifier == rhs.objectIdentifier
 }

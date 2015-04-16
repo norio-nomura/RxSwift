@@ -16,7 +16,7 @@ extension ObserverBase: IObserver {
     typealias Input = T
     
     public func onNext(value: Input) {
-        if stop() {
+        if stopped == 0 {
             onNextCore(value)
         }
     }

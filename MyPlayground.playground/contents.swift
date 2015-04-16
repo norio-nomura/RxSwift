@@ -16,3 +16,14 @@ e?.dispose()
 e = nil
 f = nil
 
+
+func WriteSequenceToConsole(sequence: Observable<String>)
+{
+    sequence.subscribe({println($0)})
+}
+
+var subject = Subject<String>()
+WriteSequenceToConsole(subject)
+subject.onNext("1")
+subject.onNext("2")
+subject.onNext("3")

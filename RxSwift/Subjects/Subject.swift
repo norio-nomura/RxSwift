@@ -12,7 +12,6 @@ public protocol ISubject: class, IObserver, IObservable {
 }
 
 public final class Subject<T>: Observable<T>, ISubject {
-    typealias Output = T
     typealias Input = T
     
     public override init() {
@@ -20,51 +19,66 @@ public final class Subject<T>: Observable<T>, ISubject {
     
     // MARK: IObservable
     public override func subscribe<TObserver : IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
-        return nil
+        spinLock.wait {
+            _observer = _observer.add(observer)
+        }
+        return Subscription(self, observer)
     }
     
     // MARK: IObserver
-    public func onNext(value: Output) {
-        
+    public func onNext(value: T) {
+        _observer.onNext(value)
     }
     
     public func onError(error: NSError) {
-        
+        var oldObserver: Observer<T>? = nil
+        spinLock.wait {
+            oldObserver = _observer
+            _observer = Observer<T>([])
+        }
+        oldObserver?.onError(error)
     }
     
     public func onCompleted() {
-        
+        var oldObserver: Observer<T>? = nil
+        spinLock.wait {
+            oldObserver = _observer
+            _observer = Observer<T>([])
+        }
+        oldObserver?.onCompleted()
     }
     
     // MARK: private
 
 
-    private func unsubscribe<TObserver : IObserver where TObserver.Input == Output>(observer: TObserver) {
-        
+    private func unsubscribe(observer: ObserverOf<Output>) {
+        spinLock.wait {
+            _observer = _observer.remove(observer)
+        }
     }
     
-    private var observer = ObserverOf<T>()
+    private var _observer = Observer<T>()
+    private var spinLock = SpinLock()
 }
 
 private class Subscription<T>: IDisposable {
     var subject: Subject<T>?
     var observer: ObserverOf<T>?
-    init<TObserver : IObserver where TObserver.Input == T>(subject: Subject<T>, observer: TObserver) {
+    init<TObserver : IObserver where TObserver.Input == T>(_ subject: Subject<T>, _ observer: TObserver) {
         self.subject = subject
         self.observer = ObserverOf(observer)
     }
     
     // MARK: IDisposable
     func dispose() {
-//        var observer:
         spinLock.wait {
-            if observer != nil {
-//                subject?.unsubscribe(observer)
+            if let _observer = observer {
+                subject?.unsubscribe(_observer)
                 observer = nil
                 subject = nil
             }
         }
     }
-    private var spinLock = SpinLock()
+    var spinLock = SpinLock()
 }
 

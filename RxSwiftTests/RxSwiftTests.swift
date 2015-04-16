@@ -34,8 +34,15 @@ class RxSwiftTests: XCTestCase {
     }
     
     func testMap() {
-        measureBlock {
-            
+        func WriteSequenceToConsole(sequence: Observable<String>) {
+            sequence.subscribe({println($0)})
         }
+        
+        var subject = Subject<String>()
+        WriteSequenceToConsole(subject)
+        subject.onNext("1")
+        subject.onNext("2")
+        subject.onNext("3")
+        
     }
 }

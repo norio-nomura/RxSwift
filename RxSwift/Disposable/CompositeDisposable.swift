@@ -31,6 +31,10 @@ internal final class CompositeDisposable: ICancelable {
     }
     
     // MARK: internal
+    init() {
+        
+    }
+    
     init(_ d1: IDisposable, _ d2: IDisposable) {
         spinLock.wait {
             _disposables.append(d1)

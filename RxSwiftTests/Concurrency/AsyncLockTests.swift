@@ -1,5 +1,5 @@
 //
-//  AsyncLock.swift
+//  AsyncLockTests.swift
 //  RxSwift
 //
 //  Created by 野村 憲男 on 4/13/15.
@@ -8,9 +8,8 @@
 
 import Foundation
 import XCTest
-import RxSwift
 
-class AsyncLockTest: XCTestCase {
+class AsyncLockTests: XCTestCase {
     
     override func setUp() {
         super.setUp()

@@ -9,6 +9,10 @@
 import Foundation
 
 public final class DispatchQueueScheduler: IScheduler {
+    public var now: NSDate {
+        return Scheduler.now
+    }
+
     private let queue = dispatch_queue_create("io.github.norio-nomura.RxSwift", DISPATCH_QUEUE_SERIAL)
     
     public init(_ queue: dispatch_queue_t) {

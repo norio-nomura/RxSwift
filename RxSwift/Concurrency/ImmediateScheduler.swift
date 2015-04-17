@@ -9,6 +9,10 @@
 import Foundation
 
 public final class ImmediateScheduler: IScheduler {
+    public var now: NSDate {
+        return Scheduler.now
+    }
+    
     public func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         return action(AsyncLockScheduler(), state)
     }
@@ -20,6 +24,10 @@ public final class ImmediateScheduler: IScheduler {
 }
 
 internal final class AsyncLockScheduler: IScheduler {
+    var now: NSDate {
+        return Scheduler.now
+    }
+    
     private var lock = AsyncLock()
     
     func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {

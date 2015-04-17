@@ -8,16 +8,16 @@
 
 import Foundation
 
-internal struct SpinLock {
+internal final class SpinLock {
     private var lock = OS_SPINLOCK_INIT
     
-    mutating func wait(@noescape action: () -> ()) {
+    func wait(@noescape action: () -> ()) {
         OSSpinLockLock(&lock)
         action()
         OSSpinLockUnlock(&lock)
     }
 
-    mutating func wait<T>(@noescape action: () -> T) -> T{
+    func wait<T>(@noescape action: () -> T) -> T{
         OSSpinLockLock(&lock)
         let result = action()
         OSSpinLockUnlock(&lock)

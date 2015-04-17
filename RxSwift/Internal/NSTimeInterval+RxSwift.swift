@@ -10,7 +10,7 @@ import Foundation
 
 internal extension NSTimeInterval {
     var nanosec: Int64 {
-        return Int64(self * Double(NSEC_PER_SEC))
+        return Int64(self * NSTimeInterval(NSEC_PER_SEC))
     }
     
     var absoluteTime: UInt64 {
@@ -23,6 +23,11 @@ internal extension NSTimeInterval {
     
     func dispatchTimeFrom(when: dispatch_time_t) -> dispatch_time_t {
         return dispatch_time(when, nanosec)
+    }
+    
+    init(absoluteTime: UInt64) {
+        let nanosec = absoluteTime * numericCast(timebase_info.numer) / numericCast(timebase_info.denom)
+        self = NSTimeInterval(nanosec) / NSTimeInterval(NSEC_PER_SEC)
     }
 }
 

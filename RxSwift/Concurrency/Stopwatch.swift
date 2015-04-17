@@ -10,7 +10,7 @@ import Foundation
 
 internal struct Stopwatch {
     /**
-    Sleep until timeIntervals since creation of Stopwatch
+    Sleep until timeInterval since creation of Stopwatch
     
     :param: timeInterval to sleep
     */
@@ -18,9 +18,16 @@ internal struct Stopwatch {
         mach_wait_until(start + timeInterval.absoluteTime);
     }
     
+    /**
+    timeInterval since creation of Stopwatch
+    */
+    var elapsedSinceCreation: NSTimeInterval {
+        return NSTimeInterval(absoluteTime: elapsedAbsoluteTime)
+    }
+    
     // MARK: private
-    private let start = mach_absolute_time()
-    private var elapsed: UInt64 {
+    private var start = mach_absolute_time()
+    private var elapsedAbsoluteTime: UInt64 {
         return mach_absolute_time() - start
     }
 }

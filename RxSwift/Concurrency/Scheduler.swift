@@ -8,19 +8,11 @@
 
 import Foundation
 
-public protocol IScheduler: class {
-    func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
-    func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
-
-    // Is absolute time scheduler needed?
-//    func schedule<TState>(state: TState, dueTime: NSDate, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
-}
-
-public protocol ISchedulerPeriodic: class {
-    func schedule<TState>(state: TState, period: NSTimeInterval, action: TState -> TState) -> IDisposable?
-}
-
 public struct Scheduler {
+    public static var now: NSDate {
+        return NSDate()
+    }
+    
     public static func normalize(timeInterval: NSTimeInterval) -> NSTimeInterval {
         return timeInterval < 0 ? 0 : timeInterval
     }
@@ -29,12 +21,9 @@ public struct Scheduler {
 }
 
 public func schedule(scheduler: IScheduler, action: () -> ()) -> IDisposable? {
+    func invoke(_: IScheduler, action: () -> ()) -> IDisposable? {
+        action()
+        return nil
+    }
     return scheduler.schedule(action, action: invoke)
-}
-
-// MARK: private
-
-private func invoke(_: IScheduler, action: () -> ()) -> IDisposable? {
-    action()
-    return nil
 }

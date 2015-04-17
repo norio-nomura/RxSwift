@@ -10,6 +10,39 @@ import Foundation
 
 // MARK: public
 
+public extension Observable {
+    /**
+    Returns an observable sequence that contains a single element, using the specified scheduler to send out observer messages.
+    
+    :param: value Single element in the resulting observable sequence.
+    
+    :returns: An observable sequence containing the single specified element.
+    */
+    public class func just(value: Output) -> Observable {
+        return _just(value)
+    }
+    
+    public class func returnValue(value: Output) -> Observable {
+        return _just(value)
+    }
+    
+    /**
+    Returns an observable sequence that contains a single element, using the specified scheduler to send out observer messages.
+    
+    :param: value     value Single element in the resulting observable sequence.
+    :param: scheduler scheduler Scheduler to send the single element on. If not specified, defaults to Scheduler.immediate.
+    
+    :returns: An observable sequence containing the single specified element.
+    */
+    public class func just(value: Output, scheduler: IScheduler) -> Observable {
+        return _just(value, scheduler: scheduler)
+    }
+    
+    public class func returnValue(value: Output, scheduler: IScheduler) -> Observable {
+        return _just(value, scheduler: scheduler)
+    }
+}
+
 /**
 Returns an observable sequence that contains a single element, using the specified scheduler to send out observer messages.
 

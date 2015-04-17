@@ -10,6 +10,30 @@ import Foundation
 
 // MARK: public
 
+public extension Observable {
+    /**
+    Projects each element of an observable sequence into a new form
+    
+    :param: selector selector selector A transform function to apply to each source element
+    
+    :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
+    */
+    public func map<TResult>(selector: Output -> TResult) -> Observable<TResult> {
+        return _map(self, selector)
+    }
+    
+    /**
+    Projects each element of an observable sequence into a new form by incorporating the element's index.
+    
+    :param: selector selector A transform function to apply to each source element; the second parameter of the function represents the index of the source element.
+    
+    :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
+    */
+    public func select<TResult>(selector: (Output, Int) -> TResult) -> Observable<TResult> {
+        return _select(self, selector)
+    }
+}
+
 /**
 Projects each element of an observable sequence into a new form.
 

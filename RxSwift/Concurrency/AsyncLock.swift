@@ -8,12 +8,21 @@
 
 import Foundation
 
-final internal class AsyncLock {
+final internal class AsyncLock: IDisposable {
     typealias Action = () -> ()
     
     private var isAcquired = false
+    private var hasFaulted = false
     private lazy var queue = [Action]()
     private lazy var spinLock = SpinLock()
+    
+    //MARK: IDisposable
+    func dispose() {
+        spinLock.wait {
+            queue.removeAll(keepCapacity: false)
+            hasFaulted = true
+        }
+    }
     
     /**
     perform action
@@ -24,9 +33,11 @@ final internal class AsyncLock {
     func wait(action: () -> ()) {
         var isOwner = false
         spinLock.wait {
-            queue.append(action)
-            isOwner = !isAcquired
-            isAcquired = true
+            if !hasFaulted {
+                queue.append(action)
+                isOwner = !isAcquired
+                isAcquired = true
+            }
         }
         if !isOwner {
             return

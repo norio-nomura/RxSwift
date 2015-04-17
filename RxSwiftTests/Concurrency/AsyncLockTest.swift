@@ -11,7 +11,7 @@ import XCTest
 import RxSwift
 
 class AsyncLockTest: XCTestCase {
-
+    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -21,35 +21,60 @@ class AsyncLockTest: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
     }
-
-    func testExample() {
-        // This is an example of a functional test case.
-        var asyncLock = AsyncLock()
+    
+    func testWait() {
+        var ok = false
+        AsyncLock().wait { ok = true }
+        XCTAssertTrue(ok)
+    }
+    
+    func testQueuesWork() {
+        var l = AsyncLock()
         
-        var isAcquired = false
-        let block: () -> ()
-        block = {
-            println()
-            var isOwner = false
-            asyncLock.wait {
-                isOwner = !isAcquired
-                isAcquired = true
+        var l1 = false
+        var l2 = false
+        
+        l.wait {
+            l.wait {
+                XCTAssertTrue(l1)
+                
+                l2 = true
             }
-            if !isOwner {
-                return
+            
+            l1 = true
+        }
+        XCTAssertTrue(l2)
+    }
+    
+    func testDispose() {
+        var l = AsyncLock()
+        
+        var l1 = false
+        var l2 = false
+        var l3 = false
+        var l4 = false
+        
+        l.wait {
+            l.wait {
+                l.wait {
+                    l3 = true
+                }
+                
+                l2 = true
+                
+                l.dispose()
+                
+                l.wait {
+                    l4 = true
+                }
             }
-            block()
+            
+            l1 = true
         }
-        XCTAssert(!isAcquired)
-        block()
-        XCTAssert(isAcquired)
+        
+        XCTAssertTrue(l1)
+        XCTAssertTrue(l2)
+        XCTAssertFalse(l3)
+        XCTAssertFalse(l4)
     }
-
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock() {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

@@ -28,12 +28,6 @@ public class Producer<T>: Observable<T>, IProducer {
         var sink = SingleAssignmentDisposable()
         var subscription = SingleAssignmentDisposable()
         
-        //        Scheduler.immediate.schedule(self) {
-        //            (_, me) -> IDisposable? in
-        //            subscription.disposable = me.run(observer, cancel: subscription, setSink: {sink.disposable = $0})
-        //            return nil
-        //        }
-        //
         Scheduler.immediate.schedule(state, action: run)
         
         return CompositeDisposable(sink, subscription)

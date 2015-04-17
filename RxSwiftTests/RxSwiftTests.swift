@@ -45,4 +45,19 @@ class RxSwiftTests: XCTestCase {
         subject.onNext("3")
         
     }
+    
+    func testTap() {
+        let subject = Subject<String>()
+        let stream = subject.tap {
+            println($0)
+        }
+        stream.subscribe {
+            println($0)
+        }
+        stream.subscribe {
+            println($0)
+        }
+        subject.onNext("foo")
+
+    }
 }

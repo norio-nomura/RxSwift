@@ -59,22 +59,21 @@ public func select<TSource, TResult>(observable: Observable<TSource>, selectorI:
 }
 
 
-// MARK: internal
+// MARK: private
 
-internal func _map<TSource, TResult>(observable: Observable<TSource>, selector: TSource -> TResult) -> Observable<TResult> {
+private func _map<TSource, TResult>(observable: Observable<TSource>, selector: TSource -> TResult) -> Observable<TResult> {
     return Select(observable, selector)
 }
 
-internal func _select<TSource, TResult>(observable: Observable<TSource>, selectorI: (TSource, Int) -> TResult) -> Observable<TResult> {
+private func _select<TSource, TResult>(observable: Observable<TSource>, selectorI: (TSource, Int) -> TResult) -> Observable<TResult> {
     return Select(observable, selectorI)
 }
 
-// MARK: private
-internal final class Select<TSource, TResult>: Producer<TResult> {
+private final class Select<TSource, TResult>: Producer<TResult> {
 
-    private let source: Observable<TSource>
-    private var selector: (TSource -> TResult)? = nil
-    private var selectorI: ((TSource, Int) -> TResult)? = nil
+    let source: Observable<TSource>
+    var selector: (TSource -> TResult)? = nil
+    var selectorI: ((TSource, Int) -> TResult)? = nil
     
     init(_ source: Observable<TSource>, _ selector: TSource -> TResult) {
         self.source = source
@@ -101,8 +100,10 @@ internal final class Select<TSource, TResult>: Producer<TResult> {
     }
 }
 
-internal final class SelectSink<TSource, TResult>: Sink<TResult>, IObserver {
+private final class SelectSink<TSource, TResult>: Sink<TResult>, IObserver {
     typealias Input = TSource
+    
+    let parent: Select<TSource, TResult>
     
     init<TObserver : IObserver where TObserver.Input == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
         self.parent = parent
@@ -123,13 +124,13 @@ internal final class SelectSink<TSource, TResult>: Sink<TResult>, IObserver {
         observer?.onCompleted()
         dispose()
     }
-
-    // MARK: private
-    private let parent: Select<TSource, TResult>
 }
 
-internal final class SelectISink<TSource, TResult>: Sink<TResult>, IObserver {
+private final class SelectISink<TSource, TResult>: Sink<TResult>, IObserver {
     typealias Input = TSource
+    
+    private let parent: Select<TSource, TResult>
+    private var index = 0
     
     init<TObserver : IObserver where TObserver.Input == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
         self.parent = parent
@@ -150,8 +151,4 @@ internal final class SelectISink<TSource, TResult>: Sink<TResult>, IObserver {
         observer?.onCompleted()
         dispose()
     }
-    
-    // MARK: private
-    private let parent: Select<TSource, TResult>
-    private var index = 0
 }

@@ -74,32 +74,26 @@ public func returnValue<T>(value: T, scheduler: IScheduler) -> Observable<T> {
     return _just(value, scheduler: scheduler)
 }
 
-// MARK: internal
+// MARK: private
 
-internal func _just<T>(value: T, scheduler: IScheduler = Scheduler.immediate) -> Observable<T> {
+private func _just<T>(value: T, scheduler: IScheduler = Scheduler.immediate) -> Observable<T> {
     return Just(value, scheduler)
-//    return AnonymousObservable({observer in
-//        return scheduler.schedule {
-//            observer.onNext(value)
-//            observer.onCompleted()
-//        }
-//    })
 }
 
-internal class Just<TResult>: Producer<TResult> {
+private class Just<TResult>: Producer<TResult> {
+    let value: TResult
+    let scheduler: IScheduler
+
     init(_ value: TResult, _ scheduler: IScheduler) {
         self.value = value
         self.scheduler = scheduler
     }
     
-    internal override func run<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
+    override func run<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
         var sink = JustSink(parent: self, observer: observer, cancel: cancel)
         setSink(sink)
         return sink.run()
     }
-    
-    private let value: TResult
-    private let scheduler: IScheduler
 }
 
 private class JustSink<TResult>: Sink<TResult> {

@@ -27,7 +27,7 @@ class StopwatchTests: XCTestCase {
         let elapsed = stopwatch.elapsedSinceCreation
         let diff = abs(elapsed - 1)
         
-        XCTAssertLessThan(diff, 0.005, "5msec is a condition that can be passed on my Mac.")
+        XCTAssertLessThan(diff, 0.006, "5msec is a condition that can be passed on my Mac.")
     }
 
 }

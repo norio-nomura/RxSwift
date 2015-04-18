@@ -129,8 +129,8 @@ private final class SelectSink<TSource, TResult>: Sink<TResult>, IObserver {
 private final class SelectISink<TSource, TResult>: Sink<TResult>, IObserver {
     typealias Input = TSource
     
-    private let parent: Select<TSource, TResult>
-    private var index = 0
+    let parent: Select<TSource, TResult>
+    var index = 0
     
     init<TObserver : IObserver where TObserver.Input == TResult>(parent: Select<TSource, TResult>, observer: TObserver, cancel: IDisposable?) {
         self.parent = parent

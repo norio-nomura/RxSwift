@@ -13,8 +13,8 @@ internal final class AnonymousDisposable: ICancelable {
     func dispose() {
         var old: (() -> ())? = nil
         spinLock.wait {
-            if !_isDisposed {
-                _isDisposed = true
+            if !isDisposed {
+                isDisposed = true
                 old = _dispose
                 _dispose = nil
             }
@@ -22,9 +22,7 @@ internal final class AnonymousDisposable: ICancelable {
         old?()
     }
     
-    var isDisposed: Bool {
-        return _isDisposed
-    }
+    private(set) var isDisposed = false
     
     // MARK internal
     init(_ dispose: () -> ()) {
@@ -36,7 +34,6 @@ internal final class AnonymousDisposable: ICancelable {
     }
     
     // MARK: private
-    private var _isDisposed = false
     private var _dispose: (() -> ())?
     private var spinLock = SpinLock()
 }

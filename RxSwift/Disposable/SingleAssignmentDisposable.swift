@@ -13,8 +13,8 @@ internal final class SingleAssignmentDisposable: ICancelable {
     func dispose() {
         var old: IDisposable? = nil
         spinLock.wait {
-            if !_isDisposed {
-                _isDisposed = true
+            if !isDisposed {
+                isDisposed = true
                 old = _disposable
                 _disposable = nil
             }
@@ -22,10 +22,8 @@ internal final class SingleAssignmentDisposable: ICancelable {
         old?.dispose()
     }
     
-    var isDisposed: Bool {
-        return _isDisposed
-    }
-    
+    private(set) var isDisposed = false
+        
     // MARK: internal
     init() {}
     
@@ -38,7 +36,7 @@ internal final class SingleAssignmentDisposable: ICancelable {
             return _disposable
         }
         set {
-            var shouldDispose = _isDisposed
+            var shouldDispose = isDisposed
             var oldValue: IDisposable? = nil
             spinLock.wait {
                 if !shouldDispose {
@@ -54,7 +52,6 @@ internal final class SingleAssignmentDisposable: ICancelable {
     }
     
     // MARK: private
-    private var _isDisposed = false
     private var _disposable: IDisposable?
     private var spinLock = SpinLock()
 }

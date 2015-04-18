@@ -28,13 +28,13 @@ internal class Sink<TSource>: IDisposable {
         return Forwarder<TSource>(self) as! TObserver
     }
     
-    var observer: ObserverOf<TSource>?
+    private(set) var observer: ObserverOf<TSource>?
     // MARK: private
     private var cancel: IDisposable?
     private var spinLock = SpinLock()
 }
 
-internal final class Forwarder<TSource>: IObserver {
+private final class Forwarder<TSource>: IObserver {
     typealias Input = TSource
     let forward: Sink<TSource>
 

@@ -34,23 +34,26 @@ public class Producer<T>: Observable<T>, IProducer {
     }
     
     // MARK: internal
-    internal func run<TObserver: IObserver where TObserver.Input == Output>(scheduler: IScheduler, x: State<TObserver>) -> IDisposable? {
-        x.subscription.disposable = run(x.observer, cancel: x.subscription, setSink: x.assign())
-        return nil
-    }
-    
     internal func run<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver, cancel: IDisposable?, setSink: IDisposable? -> ()) -> IDisposable? {
         fatalError("Abstract method \(__FUNCTION__)")
     }
+    
+    // MARK: private
+    private func run<TObserver: IObserver where TObserver.Input == Output>(scheduler: IScheduler, x: State<TObserver>) -> IDisposable? {
+        x.subscription.disposable = run(x.observer, cancel: x.subscription, setSink: x.assign())
+        return nil
+    }
 }
 
-internal struct State<TObserver: IObserver> {
+private struct State<TObserver: IObserver> {
     let observer: TObserver
     let sink = SingleAssignmentDisposable()
     let subscription = SingleAssignmentDisposable()
+    
     init(_ observer: TObserver) {
         self.observer = observer
     }
+    
     func assign() -> IDisposable? ->  () {
         return {
             self.sink.disposable = $0

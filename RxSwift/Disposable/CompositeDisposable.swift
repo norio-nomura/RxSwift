@@ -13,10 +13,10 @@ internal final class CompositeDisposable: ICancelable {
     func dispose() {
         var currentDisposables: [IDisposable]? = nil
         spinLock.wait {
-            if !_isDisposed {
-                _isDisposed = true
-                currentDisposables = _disposables
-                _disposables.removeAll(keepCapacity: false)
+            if !isDisposed {
+                isDisposed = true
+                currentDisposables = disposables
+                disposables.removeAll(keepCapacity: false)
             }
         }
         if let currentDisposables = currentDisposables {
@@ -26,9 +26,7 @@ internal final class CompositeDisposable: ICancelable {
         }
     }
     
-    var isDisposed: Bool {
-        return _isDisposed
-    }
+    private(set) var isDisposed = false
     
     // MARK: internal
     init() {
@@ -37,8 +35,8 @@ internal final class CompositeDisposable: ICancelable {
     
     init(_ d1: IDisposable, _ d2: IDisposable) {
         spinLock.wait {
-            _disposables.append(d1)
-            _disposables.append(d2)
+            disposables.append(d1)
+            disposables.append(d2)
         }
     }
     
@@ -49,9 +47,9 @@ internal final class CompositeDisposable: ICancelable {
     func append(disposable: IDisposable) {
         var shouldDispose = false
         spinLock.wait {
-            shouldDispose = _isDisposed
+            shouldDispose = isDisposed
             if !shouldDispose {
-                _disposables.append(disposable)
+                disposables.append(disposable)
             }
         }
         if shouldDispose {
@@ -62,10 +60,10 @@ internal final class CompositeDisposable: ICancelable {
     func remove(disposable: IDisposable) -> Bool {
         var shouldDispose = false
         spinLock.wait {
-            if !_isDisposed {
-                if let index = find_instance(_disposables, disposable) {
+            if !isDisposed {
+                if let index = find_instance(disposables, disposable) {
                     shouldDispose = true
-                    _disposables.removeAtIndex(index)
+                    disposables.removeAtIndex(index)
                 }
             }
         }
@@ -76,7 +74,6 @@ internal final class CompositeDisposable: ICancelable {
     }
     
     // MARK: private
-    private var _isDisposed = false
-    private var _disposables = [IDisposable]()
+    private var disposables = [IDisposable]()
     private var spinLock = SpinLock()
 }

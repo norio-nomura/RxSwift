@@ -14,7 +14,6 @@
 		6C2201F61ADFADD8005924ED /* IObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F51ADFADD8005924ED /* IObserver.swift */; };
 		6C2201F81ADFB24A005924ED /* IObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F71ADFB24A005924ED /* IObservable.swift */; };
 		6C2201FA1ADFB30A005924ED /* IDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F91ADFB30A005924ED /* IDisposable.swift */; };
-		6C2201FC1ADFBC67005924ED /* Observers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201FB1ADFBC67005924ED /* Observers.swift */; };
 		6C2423CD1AE0D5B2006E3DE7 /* StopwatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2423CC1AE0D5B2006E3DE7 /* StopwatchTests.swift */; };
 		6C4D4DE31AE0933A00419821 /* AsyncLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5DD0561ADE64DF00FEC7BB /* AsyncLockTests.swift */; };
 		6C4D4DE41AE0934700419821 /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FCD1ADBC38D000CFCB9 /* AsyncLock.swift */; };
@@ -72,7 +71,6 @@
 		6C2201F51ADFADD8005924ED /* IObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IObserver.swift; sourceTree = "<group>"; };
 		6C2201F71ADFB24A005924ED /* IObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IObservable.swift; sourceTree = "<group>"; };
 		6C2201F91ADFB30A005924ED /* IDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IDisposable.swift; sourceTree = "<group>"; };
-		6C2201FB1ADFBC67005924ED /* Observers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Observers.swift; sourceTree = "<group>"; };
 		6C2423CC1AE0D5B2006E3DE7 /* StopwatchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StopwatchTests.swift; sourceTree = "<group>"; };
 		6C4D4DE91AE0992B00419821 /* SpinLockTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SpinLockTests.swift; sourceTree = "<group>"; };
 		6C5656181AE1492E00166A89 /* Tap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tap.swift; sourceTree = "<group>"; };
@@ -190,7 +188,6 @@
 				6CA6F22C1ADD1A0B001C5D6C /* NSTimeInterval+RxSwift.swift */,
 				6C2201EE1ADF74FB005924ED /* ObservableOf.swift */,
 				6C56645E1ADE8CDC0081408F /* ObserverOf.swift */,
-				6C2201FB1ADFBC67005924ED /* Observers.swift */,
 				6CA6F2281ADD1845001C5D6C /* Utils.swift */,
 			);
 			path = Internal;
@@ -426,7 +423,6 @@
 				6C8685F91AD52EA1009A86F3 /* AnonymousObserver.swift in Sources */,
 				6CA6F2291ADD1845001C5D6C /* Utils.swift in Sources */,
 				6C2201EC1ADF6D84005924ED /* Just.swift in Sources */,
-				6C2201FC1ADFBC67005924ED /* Observers.swift in Sources */,
 				6CA959681ADE4ACD0024262D /* Disposable.swift in Sources */,
 				6C2201ED1ADF7120005924ED /* Select.swift in Sources */,
 			);

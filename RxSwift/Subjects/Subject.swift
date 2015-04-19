@@ -31,19 +31,19 @@ public final class Subject<T>: Observable<T>, ISubject {
     }
     
     public func onError(error: NSError) {
-        var oldObserver: Observer<T>? = nil
+        var oldObserver: SubjectObserver<T>? = nil
         spinLock.wait {
             oldObserver = _observer
-            _observer = Observer<T>([])
+            _observer = SubjectObserver<T>([])
         }
         oldObserver?.onError(error)
     }
     
     public func onCompleted() {
-        var oldObserver: Observer<T>? = nil
+        var oldObserver: SubjectObserver<T>? = nil
         spinLock.wait {
             oldObserver = _observer
-            _observer = Observer<T>([])
+            _observer = SubjectObserver<T>([])
         }
         oldObserver?.onCompleted()
     }
@@ -57,7 +57,7 @@ public final class Subject<T>: Observable<T>, ISubject {
         }
     }
     
-    private var _observer = Observer<T>()
+    private var _observer = SubjectObserver<T>()
     private var spinLock = SpinLock()
 }
 
@@ -82,3 +82,56 @@ private class Subscription<T>: IDisposable {
     var spinLock = SpinLock()
 }
 
+private final class SubjectObserver<T>: IObserver {
+    typealias Input = T
+    let observers: [ObserverOf<Input>]
+    
+    init(_ observers: [ObserverOf<Input>]) {
+        self.observers = observers
+    }
+    
+    init() {
+        self.observers = []
+    }
+    
+    func onNext(value: Input) {
+        for observer in observers {
+            observer.onNext(value)
+        }
+    }
+    
+    func onError(error: NSError) {
+        for observer in observers {
+            observer.onError(error)
+        }
+    }
+    
+    func onCompleted() {
+        for observer in observers {
+            observer.onCompleted()
+        }
+    }
+    
+    func add(observer: ObserverOf<Input>) -> SubjectObserver {
+        var newObservers = observers
+        newObservers.append(observer)
+        return SubjectObserver(newObservers)
+    }
+    
+    func add<TObserver: IObserver where TObserver.Input == Input>(observer: TObserver) -> SubjectObserver {
+        return add(ObserverOf(observer))
+    }
+    
+    func remove(observer: ObserverOf<Input>) -> SubjectObserver {
+        if observers.isEmpty {
+            return self
+        } else {
+            let newObservers = observers.filter {$0 != observer}
+            return SubjectObserver(newObservers)
+        }
+    }
+    
+    func remove<TObserver: IObserver where TObserver.Input == Input>(observer: TObserver) -> SubjectObserver {
+        return remove(ObserverOf(observer))
+    }
+}

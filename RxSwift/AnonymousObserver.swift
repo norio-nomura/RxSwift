@@ -26,6 +26,10 @@ public final class AnonymousObserver<T>: ObserverBase<T> {
         self.init(next, {_ in}, completed)
     }
     
+    public init<TObserver: IObserver where TObserver.Input == Input>(_ observer: TObserver) {
+        _observer = ObserverOf(observer)
+    }
+    
     // MARK: private
     override func onNextCore(value: Input) {
         _observer.onNext(value)

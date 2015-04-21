@@ -8,25 +8,34 @@
 
 import Foundation
 
-public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative>: IScheduler {
+public protocol VirtualTimeConverter {
+    typealias AbsoluteTime
+    typealias RelativeTime
+    
+    static func add(absolute: AbsoluteTime, relative: RelativeTime) -> AbsoluteTime
+    static func toDate(absolute: AbsoluteTime) -> NSDate
+    static func toRelative(timeInterval: NSTimeInterval) -> RelativeTime
+}
+
+public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converter: VirtualTimeConverter where Converter.AbsoluteTime == TAbsolute, Converter.RelativeTime == TRelative>: IScheduler {
     
     // MARK: IScheduler
-    
     public var now: NSDate {
-        return toDate(clock)
+        return Converter.toDate(clock)
     }
     
-    public func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        return scheduleAbsolute(state, dueTime: clock, action: action)
+    public func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        return scheduleAbsolute(state: state, dueTime: clock, action: action)
     }
     
-    public func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        return scheduleRelative(state, dueTime: toRelative(dueTime), action: action)
+    public func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        return scheduleRelative(state: state, dueTime: Converter.toRelative(dueTime), action: action)
     }
     
     // MARK: public
-    public private(set) var clock: TAbsolute
-    public private(set) var isEnabled = false
+    public init(_ initialClock: TAbsolute) {
+        clock = initialClock
+    }
     
     public func start() {
         if !isEnabled {
@@ -64,46 +73,62 @@ public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative>: ISchedu
             }
             isEnabled = false
         } else {
-            preconditionFailure("can't advance while runninng")
+            preconditionFailure("advanceTo: can't advance while runninng")
+        }
+    }
+    
+    public func advanceBy(time: TRelative) {
+        let dt = Converter.add(clock, relative: time)
+        if dt < clock {
+            preconditionFailure("dt(\(dt)) < clock(\(clock))")
         }
         
+        if dt == clock {
+            return
+        }
+        
+        if !isEnabled {
+            advanceTo(dt)
+        } else {
+            preconditionFailure("advanceBy: can't advance while runninng")
+        }
     }
     
+    public func sleep(time: TRelative) {
+        let dt = Converter.add(clock, relative: time)
+        if dt < clock {
+            preconditionFailure("dt(\(dt)) < clock(\(clock))")
+        }
+        
+        clock = dt
+    }
+    
+    public func scheduleRelative<TState>(#state: TState, dueTime: TRelative, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        var runAt = Converter.add(clock, relative: dueTime)
+        return scheduleAbsolute(state: state, dueTime: runAt, action: action)
+    }
+    
+    public func scheduleAbsolute<TState>(#state: TState, dueTime: TAbsolute, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        fatalError("Abstract method \(__FUNCTION__)")
+    }
+    
+    public func getNext() -> ScheduledItemBase<TAbsolute>? {
+        fatalError("Abstract method \(__FUNCTION__)")
+    }
+
     // MARK: internal
-    init(initialClock: TAbsolute) {
-        clock = initialClock
-    }
-    
-    func add(absolute: TAbsolute, relative: TRelative) -> TAbsolute {
-        fatalError("Abstract method \(__FUNCTION__)")
-    }
-    
-    func toDate(absolute: TAbsolute) -> NSDate {
-        fatalError("Abstract method \(__FUNCTION__)")
-    }
-    
-    func toRelative(timeInterval: NSTimeInterval) -> TRelative {
-        fatalError("Abstract method \(__FUNCTION__)")
-    }
-    
-    func scheduleAbsolute<TState>(state: TState, dueTime: TAbsolute, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        fatalError("Abstract method \(__FUNCTION__)")
-    }
-    
-    func scheduleRelative<TState>(state: TState, dueTime: TRelative, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        var runAt = add(clock, relative: dueTime)
-        return scheduleAbsolute(state, dueTime: runAt, action: action)
-    }
-    
-    func getNext() -> ScheduledItemBase<TAbsolute>? {
-        fatalError("Abstract method \(__FUNCTION__)")
-    }
+    private(set) var clock: TAbsolute
+    private(set) var isEnabled = false
 }
 
-public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative>: VirtualTimeSchedulerBase<TAbsolute, TRelative> {
+public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative, Converter: VirtualTimeConverter where Converter.AbsoluteTime == TAbsolute, Converter.RelativeTime == TRelative>: VirtualTimeSchedulerBase<TAbsolute, TRelative, Converter> {
     // MARK: public
     
-    public override func scheduleAbsolute<TState>(state: TState, dueTime: TAbsolute, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public override init(_ initialClock: TAbsolute) {
+        super.init(initialClock)
+    }
+    
+    public override func scheduleAbsolute<TState>(#state: TState, dueTime: TAbsolute, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         var si: ScheduledItemBase<TAbsolute>! = nil
         
         let run = {[unowned self] (scheduler: IScheduler, state: TState) -> IDisposable? in
@@ -124,8 +149,7 @@ public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative>: VirtualTime
         return Disposable.create(si.cancel)
     }
     
-    // MARK: internal
-    override func getNext() -> ScheduledItemBase<TAbsolute>? {
+    public override func getNext() -> ScheduledItemBase<TAbsolute>? {
         return spinLock.wait {
             if self.queue.isEmpty {
                 return nil

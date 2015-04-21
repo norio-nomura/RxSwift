@@ -28,7 +28,7 @@ public class Producer<T>: Observable<T>, IProducer {
         var sink = SingleAssignmentDisposable()
         var subscription = SingleAssignmentDisposable()
         
-        Scheduler.immediate.schedule(state, action: run)
+        Scheduler.immediate.schedule(state: state, action: run)
         
         return CompositeDisposable(sink, subscription)
     }

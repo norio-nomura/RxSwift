@@ -15,7 +15,7 @@ public func schedule(scheduler: IScheduler, action: (() -> ()) -> ()) -> IDispos
 }
 
 public func schedule<TState>(scheduler: IScheduler, state: TState, action: (TState, TState -> ()) -> ()) ->  IDisposable? {
-    return scheduler.schedule((state: state, action: action), action: invokeRec1)
+    return scheduler.schedule(state: (state: state, action: action), action: invokeRec1)
 }
 
 private func invokeRec1<TState>(scheduler: IScheduler, pair: (state: TState, action: (TState, TState -> ()) -> ())) -> IDisposable? {
@@ -29,7 +29,7 @@ private func invokeRec1<TState>(scheduler: IScheduler, pair: (state: TState, act
             var isAdded = false
             var isDone = false
             var d: IDisposable? = nil
-            d = scheduler.schedule(state2) { scheduler1, state3 in
+            d = scheduler.schedule(state: state2) { scheduler1, state3 in
                 lock.wait {
                     if isAdded {
                         if let d = d {

@@ -11,13 +11,13 @@ import Foundation
 public protocol IScheduler: class {
     var now: NSDate {get}
     
-    func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
-    func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
+    func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
+    func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
     
     // Is absolute time scheduler needed?
     //    func schedule<TState>(state: TState, dueTime: NSDate, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
 }
 
 public protocol ISchedulerPeriodic: class {
-    func schedule<TState>(state: TState, period: NSTimeInterval, action: TState -> TState) -> IDisposable?
+    func schedule<TState>(#state: TState, period: NSTimeInterval, action: TState -> TState) -> IDisposable?
 }

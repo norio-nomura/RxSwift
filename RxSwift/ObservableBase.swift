@@ -12,7 +12,7 @@ import Foundation
 internal class ObservableBase<T>: Observable<T> {
     override func subscribe<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> IDisposable? {
         var ado = AutoDetachObserver(observer)
-        Scheduler.immediate.schedule(ado, action: scheduledSubscribe)
+        Scheduler.immediate.schedule(state: ado, action: scheduledSubscribe)
         return ado
     }
     

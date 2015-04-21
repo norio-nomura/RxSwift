@@ -19,7 +19,7 @@ public final class DispatchQueueScheduler: IScheduler {
         dispatch_set_target_queue(self.queue, queue)
     }
     
-    public func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         dispatch_async(queue) {
             if !m.isDisposed {
@@ -29,7 +29,7 @@ public final class DispatchQueueScheduler: IScheduler {
         return m
     }
 
-    public func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         dispatch_after(dueTime.dispatchTimeFromNow(), queue) {
             if !m.isDisposed {

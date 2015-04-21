@@ -13,11 +13,11 @@ public final class ImmediateScheduler: IScheduler {
         return Scheduler.now
     }
     
-    public func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         return action(AsyncLockScheduler(), state)
     }
     
-    public func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         Stopwatch().sleep(Scheduler.normalize(dueTime))
         return action(AsyncLockScheduler(), state)
     }
@@ -30,7 +30,7 @@ internal final class AsyncLockScheduler: IScheduler {
     
     private var lock = AsyncLock()
     
-    func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         lock.wait {
             if !m.isDisposed {
@@ -40,9 +40,9 @@ internal final class AsyncLockScheduler: IScheduler {
         return m
     }
     
-    func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         if dueTime <= 0 {
-            return schedule(state, action: action)
+            return schedule(state: state, action: action)
         }
         let stopwatch = Stopwatch()
         var m = SingleAssignmentDisposable()

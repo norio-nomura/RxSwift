@@ -47,14 +47,14 @@ class SchedulerTests: XCTestCase {
             self.now = now
         }
         
-        func schedule<TState>(state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
             return action(self, state)
         }
         
         var check: (Any, NSTimeInterval, Any -> ()) -> () = {_,_,_ in}
         var waitCycles: NSTimeInterval = 0
         
-        func schedule<TState>(state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
             check(state, dueTime) { action(self, $0 as! TState) }
             waitCycles += dueTime
             return action(self, state)

@@ -16,8 +16,6 @@
 		6C2201FA1ADFB30A005924ED /* IDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F91ADFB30A005924ED /* IDisposable.swift */; };
 		6C2423CD1AE0D5B2006E3DE7 /* StopwatchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2423CC1AE0D5B2006E3DE7 /* StopwatchTests.swift */; };
 		6C4D4DE31AE0933A00419821 /* AsyncLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5DD0561ADE64DF00FEC7BB /* AsyncLockTests.swift */; };
-		6C4D4DE41AE0934700419821 /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FCD1ADBC38D000CFCB9 /* AsyncLock.swift */; };
-		6C4D4DE51AE0934E00419821 /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FCA1ADBBF76000CFCB9 /* SpinLock.swift */; };
 		6C4D4DEA1AE0992B00419821 /* SpinLockTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C4D4DE91AE0992B00419821 /* SpinLockTests.swift */; };
 		6C5656191AE1492E00166A89 /* Tap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5656181AE1492E00166A89 /* Tap.swift */; };
 		6C56645F1ADE8CDC0081408F /* ObserverOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C56645E1ADE8CDC0081408F /* ObserverOf.swift */; };
@@ -28,14 +26,28 @@
 		6C577FD41ADC0142000CFCB9 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FD31ADC0142000CFCB9 /* Stopwatch.swift */; };
 		6C577FD61ADC0F9E000CFCB9 /* DispatchQueueScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FD51ADC0F9E000CFCB9 /* DispatchQueueScheduler.swift */; };
 		6C5DD0551ADE5C6C00FEC7BB /* Sink.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C5DD0531ADE559B00FEC7BB /* Sink.swift */; };
-		6C685B681AE0CD6D0086F517 /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FD31ADC0142000CFCB9 /* Stopwatch.swift */; };
-		6C685B691AE0CD720086F517 /* NSTimeInterval+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F22C1ADD1A0B001C5D6C /* NSTimeInterval+RxSwift.swift */; };
 		6C8685F91AD52EA1009A86F3 /* AnonymousObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8685F71AD52EA1009A86F3 /* AnonymousObserver.swift */; };
 		6C8685FA1AD52EA1009A86F3 /* AnonymousObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8685F81AD52EA1009A86F3 /* AnonymousObservable.swift */; };
 		6C8BEE191AE3A73E000935BB /* Observer.Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE181AE3A73E000935BB /* Observer.Extensions.swift */; };
 		6C8BEE1B1AE3BD65000935BB /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE1A1AE3BD65000935BB /* ObserverTests.swift */; };
 		6C8BEE1D1AE4D3FC000935BB /* VirtualTimeScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE1C1AE4D3FC000935BB /* VirtualTimeScheduler.swift */; };
 		6C8BEE1F1AE4F312000935BB /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE1E1AE4F312000935BB /* ScheduledItem.swift */; };
+		6C8BEE2C1AE50FFF000935BB /* SpinLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FCA1ADBBF76000CFCB9 /* SpinLock.swift */; };
+		6C8BEE2D1AE51008000935BB /* Stopwatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FD31ADC0142000CFCB9 /* Stopwatch.swift */; };
+		6C8BEE2E1AE51014000935BB /* NSTimeInterval+RxSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F22C1ADD1A0B001C5D6C /* NSTimeInterval+RxSwift.swift */; };
+		6C8BEE2F1AE51020000935BB /* AsyncLock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FCD1ADBC38D000CFCB9 /* AsyncLock.swift */; };
+		6C8BEE301AE5103D000935BB /* VirtualTimeScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE1C1AE4D3FC000935BB /* VirtualTimeScheduler.swift */; };
+		6C8BEE311AE51048000935BB /* IScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A281AE0F34400936774 /* IScheduler.swift */; };
+		6C8BEE321AE5104F000935BB /* IDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F91ADFB30A005924ED /* IDisposable.swift */; };
+		6C8BEE331AE51063000935BB /* ScheduledItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE1E1AE4F312000935BB /* ScheduledItem.swift */; };
+		6C8BEE341AE5106F000935BB /* Disposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA959671ADE4ACD0024262D /* Disposable.swift */; };
+		6C8BEE351AE51076000935BB /* AnonymousDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F22A1ADD1935001C5D6C /* AnonymousDisposable.swift */; };
+		6C8BEE361AE51086000935BB /* SingleAssignmentDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F2241ADD17FD001C5D6C /* SingleAssignmentDisposable.swift */; };
+		6C8BEE371AE51090000935BB /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F2281ADD1845001C5D6C /* Utils.swift */; };
+		6C8BEE381AE513B8000935BB /* Scheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FC41ADB4B7C000CFCB9 /* Scheduler.swift */; };
+		6C8BEE391AE513BF000935BB /* ImmediateScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C577FC81ADB6D6A000CFCB9 /* ImmediateScheduler.swift */; };
+		6C8BEE3A1AE513D2000935BB /* Scheduler.Recursive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A2D1AE0FFBE00936774 /* Scheduler.Recursive.swift */; };
+		6C8BEE3B1AE513D8000935BB /* CompositeDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F2261ADD181B001C5D6C /* CompositeDisposable.swift */; };
 		6CA6F2251ADD17FD001C5D6C /* SingleAssignmentDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F2241ADD17FD001C5D6C /* SingleAssignmentDisposable.swift */; };
 		6CA6F2271ADD181B001C5D6C /* CompositeDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F2261ADD181B001C5D6C /* CompositeDisposable.swift */; };
 		6CA6F2291ADD1845001C5D6C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA6F2281ADD1845001C5D6C /* Utils.swift */; };
@@ -448,15 +460,27 @@
 			buildActionMask = 2147483647;
 			files = (
 				6C4D4DEA1AE0992B00419821 /* SpinLockTests.swift in Sources */,
-				6C4D4DE51AE0934E00419821 /* SpinLock.swift in Sources */,
-				6C685B691AE0CD720086F517 /* NSTimeInterval+RxSwift.swift in Sources */,
+				6C8BEE341AE5106F000935BB /* Disposable.swift in Sources */,
 				6CDDF75D1ACBE5F300C16A79 /* RxSwiftTests.swift in Sources */,
-				6C685B681AE0CD6D0086F517 /* Stopwatch.swift in Sources */,
-				6C4D4DE41AE0934700419821 /* AsyncLock.swift in Sources */,
+				6C8BEE2E1AE51014000935BB /* NSTimeInterval+RxSwift.swift in Sources */,
 				6C2423CD1AE0D5B2006E3DE7 /* StopwatchTests.swift in Sources */,
+				6C8BEE3A1AE513D2000935BB /* Scheduler.Recursive.swift in Sources */,
 				6C8BEE1B1AE3BD65000935BB /* ObserverTests.swift in Sources */,
+				6C8BEE2D1AE51008000935BB /* Stopwatch.swift in Sources */,
+				6C8BEE391AE513BF000935BB /* ImmediateScheduler.swift in Sources */,
+				6C8BEE351AE51076000935BB /* AnonymousDisposable.swift in Sources */,
+				6C8BEE361AE51086000935BB /* SingleAssignmentDisposable.swift in Sources */,
+				6C8BEE2C1AE50FFF000935BB /* SpinLock.swift in Sources */,
+				6C8BEE331AE51063000935BB /* ScheduledItem.swift in Sources */,
+				6C8BEE2F1AE51020000935BB /* AsyncLock.swift in Sources */,
 				6CBE5A2B1AE0F5AA00936774 /* SchedulerTests.swift in Sources */,
+				6C8BEE381AE513B8000935BB /* Scheduler.swift in Sources */,
+				6C8BEE321AE5104F000935BB /* IDisposable.swift in Sources */,
+				6C8BEE311AE51048000935BB /* IScheduler.swift in Sources */,
 				6C4D4DE31AE0933A00419821 /* AsyncLockTests.swift in Sources */,
+				6C8BEE301AE5103D000935BB /* VirtualTimeScheduler.swift in Sources */,
+				6C8BEE371AE51090000935BB /* Utils.swift in Sources */,
+				6C8BEE3B1AE513D8000935BB /* CompositeDisposable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

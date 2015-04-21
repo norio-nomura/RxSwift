@@ -21,9 +21,14 @@ public struct Scheduler {
 }
 
 public func schedule(scheduler: IScheduler, action: () -> ()) -> IDisposable? {
-    func invoke(_: IScheduler, action: () -> ()) -> IDisposable? {
-        action()
-        return nil
-    }
-    return scheduler.schedule(action, action: invoke)
+    return scheduler.schedule(state: action, action: invoke)
+}
+
+public func schedule(scheduler: IScheduler, dueTime: NSTimeInterval, action: () -> ()) -> IDisposable? {
+    return scheduler.schedule(state: action, dueTime: dueTime, action: invoke)
+}
+
+private func invoke(_: IScheduler, action: () -> ()) -> IDisposable? {
+    action()
+    return nil
 }

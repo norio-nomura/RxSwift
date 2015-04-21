@@ -26,11 +26,7 @@ internal final class SingleAssignmentDisposable: ICancelable {
         
     // MARK: internal
     init() {}
-    
-    deinit {
-        dispose()
-    }
-    
+
     var disposable: IDisposable? {
         get {
             return _disposable

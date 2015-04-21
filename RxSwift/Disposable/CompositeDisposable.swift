@@ -40,10 +40,6 @@ internal final class CompositeDisposable: ICancelable {
         }
     }
     
-    deinit {
-        dispose()
-    }
-    
     func append(disposable: IDisposable) {
         var shouldDispose = false
         spinLock.wait {

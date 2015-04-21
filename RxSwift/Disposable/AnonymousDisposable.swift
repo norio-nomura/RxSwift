@@ -29,10 +29,6 @@ internal final class AnonymousDisposable: ICancelable {
         self._dispose = dispose
     }
     
-    deinit {
-        dispose()
-    }
-    
     // MARK: private
     private var _dispose: (() -> ())?
     private var spinLock = SpinLock()

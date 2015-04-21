@@ -32,6 +32,10 @@ public class Observable<T>: IObservable {
 // MARK: subscribe
 
 public extension Observable {
+    public func subscribe() -> IDisposable? {
+        return subscribe(AnonymousObserver({_ in}))
+    }
+    
     public func subscribe(onNext: Output -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext))
     }

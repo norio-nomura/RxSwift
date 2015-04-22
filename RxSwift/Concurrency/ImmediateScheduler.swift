@@ -9,41 +9,41 @@
 import Foundation
 
 public final class ImmediateScheduler: Scheduler {
-    // MARK: ISchedulerCore
-    public override func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        return action(AsyncLockScheduler(), state)
+    // MARK: scheduleCore
+    override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
+        return action(AsyncLockScheduler())
     }
     
-    public override func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    override func scheduleCore(#state: Any, dueTime: NSTimeInterval, action: IScheduler -> IDisposable?) -> IDisposable? {
         Stopwatch().sleep(Scheduler.normalize(dueTime))
-        return action(AsyncLockScheduler(), state)
+        return action(AsyncLockScheduler())
     }
 }
 
 internal final class AsyncLockScheduler: Scheduler {
     private var lock = AsyncLock()
     
-    // MARK: ISchedulerCore
-    override func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    // MARK: scheduleCore
+    override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         lock.wait {
             if !m.isDisposed {
-                m.disposable = action(self, state)
+                m.disposable = action(self)
             }
         }
         return m
     }
-    
-    override func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+
+    override func scheduleCore(#state: Any, dueTime: NSTimeInterval, action: IScheduler -> IDisposable?) -> IDisposable? {
         if dueTime <= 0 {
-            return schedule(state: state, action: action)
+            return scheduleCore(state: state, action: action)
         }
         let stopwatch = Stopwatch()
         var m = SingleAssignmentDisposable()
         lock.wait {
             if !m.isDisposed {
                 stopwatch.sleep(dueTime)
-                m.disposable = action(self, state)
+                m.disposable = action(self)
             }
         }
         return m

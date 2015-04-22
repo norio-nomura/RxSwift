@@ -52,17 +52,19 @@ class SchedulerTests: XCTestCase {
             return _now
         }
         
-        override func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-            return action(self, state)
+        
+        // MARK: scheduleCore
+        override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
+            return action(self)
         }
         
-        override func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-            check(state, dueTime) { action(self, $0 as! TState) }
+        override func scheduleCore(#state: Any, dueTime: NSTimeInterval, action: IScheduler -> IDisposable?) -> IDisposable? {
+            check(state, dueTime) { action(self) }
             waitCycles += dueTime
-            return action(self, state)
+            return action(self)
         }
 
-        var check: (Any, NSTimeInterval, Any -> ()) -> () = {_,_,_ in}
+        var check: (Any, NSTimeInterval, () -> ()) -> () = {_,_,_ in}
         var waitCycles: NSTimeInterval = 0
     }
 }

@@ -24,14 +24,6 @@ public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converte
         return Converter.toDate(clock)
     }
     
-    public func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        return scheduleAbsolute(state: state, dueTime: clock, action: action)
-    }
-    
-    public func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        return scheduleRelative(state: state, dueTime: Converter.toRelative(dueTime), action: action)
-    }
-    
     // MARK: public
     public init(_ initialClock: TAbsolute) {
         clock = initialClock
@@ -103,12 +95,12 @@ public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converte
         clock = dt
     }
     
-    public func scheduleRelative<TState>(#state: TState, dueTime: TRelative, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public final func scheduleRelative<TState>(#state: TState, dueTime: TRelative, action: IScheduler -> IDisposable?) -> IDisposable? {
         var runAt = Converter.add(clock, relative: dueTime)
         return scheduleAbsolute(state: state, dueTime: runAt, action: action)
     }
     
-    public func scheduleAbsolute<TState>(#state: TState, dueTime: TAbsolute, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public func scheduleAbsolute<TState>(#state: TState, dueTime: TAbsolute, action: IScheduler -> IDisposable?) -> IDisposable? {
         fatalError("Abstract method \(__FUNCTION__)")
     }
     
@@ -116,6 +108,15 @@ public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converte
         fatalError("Abstract method \(__FUNCTION__)")
     }
 
+    // scheduleCore
+    override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
+        return scheduleAbsolute(state: state, dueTime: clock, action: action)
+    }
+    
+    override func scheduleCore(#state: Any, dueTime: NSTimeInterval, action: IScheduler -> IDisposable?) -> IDisposable? {
+        return scheduleRelative(state: state, dueTime: Converter.toRelative(dueTime), action: action)
+    }
+    
     // MARK: internal
     private(set) var clock: TAbsolute
     private(set) var isEnabled = false
@@ -128,10 +129,10 @@ public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative, Converter: V
         super.init(initialClock)
     }
     
-    public override func scheduleAbsolute<TState>(#state: TState, dueTime: TAbsolute, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public override func scheduleAbsolute<TState>(#state: TState, dueTime: TAbsolute, action: IScheduler -> IDisposable?) -> IDisposable? {
         var si: ScheduledItemBase<TAbsolute>! = nil
         
-        let run = {[unowned self] (scheduler: IScheduler, state: TState) -> IDisposable? in
+        let run = {[unowned self] (scheduler: IScheduler) -> IDisposable? in
             self.spinLock.wait {
                 if let si = si {
                     if let index = find_instance(self.queue, si) {
@@ -139,9 +140,9 @@ public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative, Converter: V
                     }
                 }
             }
-            return action(scheduler, state)
+            return action(scheduler)
         }
-        si = ScheduledItem(scheduler: self, state: state, action: action, dueTime: dueTime)
+        si = ScheduledItem(scheduler: self, action: run, dueTime: dueTime)
         spinLock.wait {
             queue.append(si)
             sort(&queue, {$0.dueTime < $1.dueTime})

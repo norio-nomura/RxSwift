@@ -9,27 +9,44 @@
 import Foundation
 
 public class Scheduler: IScheduler {
+    
+    /**
+    Swift 1.2 can't allow overriding generic methods of non-generic class with generic class.
+    So, I use methods for overriding `scheduleCore()`
+    See: https://devforums.apple.com/thread/268824
+    */
+    
     // MARK: ISchedulerCore
-    public func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        fatalError("Abstract method \(__FUNCTION__)")
+    public final func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        return scheduleCore(state: state, action: {return action($0, state)})
     }
-    public func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
-        fatalError("Abstract method \(__FUNCTION__)")
+    
+    public final func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        return scheduleCore(state: state, dueTime: dueTime, action: {return action($0, state)})
     }
     
     // MARK: IScheduler
     public var now: NSDate {
         return NSDate()
     }
+    
+    // MARK: internal
+    func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
+        fatalError("Abstract method \(__FUNCTION__)")
+    }
+    
+    func scheduleCore(#state: Any, dueTime: NSTimeInterval, action: IScheduler -> IDisposable?) -> IDisposable? {
+        fatalError("Abstract method \(__FUNCTION__)")
+    }
 }
 
 extension Scheduler {
     // MARK: IScheduler
-    public func schedule(#action: () -> ()) -> IDisposable? {
+    public final func schedule(#action: () -> ()) -> IDisposable? {
         return schedule(state: action, action: invoke)
     }
     
-    public func schedule(#dueTime: NSTimeInterval, action: () -> ()) -> IDisposable? {
+    public final func schedule(#dueTime: NSTimeInterval, action: () -> ()) -> IDisposable? {
         return schedule(state: action, dueTime: dueTime, action: invoke)
     }
 

@@ -48,21 +48,19 @@ public class ScheduledItemBase<TAbsolute: Comparable>: IScheduledItem {
     let _disposable = SingleAssignmentDisposable()
 }
 
-public class ScheduledItem<TAbsolute: Comparable, TValue>: ScheduledItemBase<TAbsolute> {
-    public init(scheduler: IScheduler, state: TValue, action: (IScheduler, TValue) -> IDisposable?, dueTime: TAbsolute) {
+public class ScheduledItem<TAbsolute: Comparable>: ScheduledItemBase<TAbsolute> {
+    public init(scheduler: IScheduler, action: IScheduler -> IDisposable?, dueTime: TAbsolute) {
         self.scheduler = scheduler
-        self.state = state
         self.action = action
         super.init(dueTime: dueTime)
     }
     
     // MARK: internal
     override func invokeCore() -> IDisposable? {
-        return action(scheduler, state)
+        return action(scheduler)
     }
     
     // MARK: private
     private let scheduler: IScheduler
-    private let state: TValue
-    private let action: (IScheduler, TValue) -> IDisposable?
+    private let action: IScheduler -> IDisposable?
 }

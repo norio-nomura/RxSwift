@@ -15,22 +15,22 @@ public final class DispatchQueueScheduler: Scheduler {
         dispatch_set_target_queue(self.queue, queue)
     }
     
-    // MARK: ISchedulerCore
-    public override func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    // MARK: scheduleCore
+    override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         dispatch_async(queue) {
             if !m.isDisposed {
-                m.disposable = action(self, state)
+                m.disposable = action(self)
             }
         }
         return m
     }
 
-    public override func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    override func scheduleCore(#state: Any, dueTime: NSTimeInterval, action: IScheduler -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         dispatch_after(dueTime.dispatchTimeFromNow(), queue) {
             if !m.isDisposed {
-                m.disposable = action(self, state)
+                m.disposable = action(self)
             }
         }
         return m

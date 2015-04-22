@@ -32,23 +32,23 @@ public class Observable<T>: IObservable {
 // MARK: subscribe
 
 public extension Observable {
-    public func subscribe() -> IDisposable? {
+    public final func subscribe() -> IDisposable? {
         return subscribe(AnonymousObserver({_ in}))
     }
     
-    public func subscribe(onNext: Output -> ()) -> IDisposable? {
+    public final func subscribe(onNext: Output -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext))
     }
     
-    public func subscribe(onNext: Output -> (), _ onError: NSError -> ()) -> IDisposable? {
+    public final func subscribe(onNext: Output -> (), _ onError: NSError -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext, onError))
     }
     
-    public func subscribe(onNext: Output -> (), _ onCompleted: () -> ()) -> IDisposable? {
+    public final func subscribe(onNext: Output -> (), _ onCompleted: () -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext, onCompleted))
     }
     
-    public func subscribe(onNext: Output -> (), _ onError: NSError -> (), _ onCompleted: () -> ()) -> IDisposable? {
+    public final func subscribe(onNext: Output -> (), _ onError: NSError -> (), _ onCompleted: () -> ()) -> IDisposable? {
         return subscribe(AnonymousObserver(onNext, onError, onCompleted))
     }
 }

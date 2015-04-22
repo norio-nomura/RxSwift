@@ -61,7 +61,7 @@ public final class Subject<T>: Observable<T>, ISubject {
     private var spinLock = SpinLock()
 }
 
-private class Subscription<T>: IDisposable {
+private final class Subscription<T>: IDisposable {
     var subject: Subject<T>?
     var observer: ObserverOf<T>?
     init<TObserver : IObserver where TObserver.Input == T>(_ subject: Subject<T>, _ observer: TObserver) {

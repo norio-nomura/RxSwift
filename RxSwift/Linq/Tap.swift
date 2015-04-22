@@ -9,23 +9,23 @@
 import Foundation
 
 extension Observable {
-    public func tap(next: Output -> ()) -> Observable {
+    public final func tap(next: Output -> ()) -> Observable {
         return _tap(self, next, {_ in}, {})
     }
     
-    public func tap(next: Output -> (), completed: () -> ()) -> Observable {
+    public final func tap(next: Output -> (), completed: () -> ()) -> Observable {
         return _tap(self, next, {_ in}, completed)
     }
     
-    public func tap(next: Output -> (), error: NSError -> ()) -> Observable {
+    public final func tap(next: Output -> (), error: NSError -> ()) -> Observable {
         return _tap(self, next, error, {})
     }
     
-    public func tap(next: Output -> (), error: NSError -> (), completed: () -> ()) -> Observable {
+    public final func tap(next: Output -> (), error: NSError -> (), completed: () -> ()) -> Observable {
         return _tap(self, next, error, completed)
     }
     
-    public func tap<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> Observable {
+    public final func tap<TObserver: IObserver where TObserver.Input == Output>(observer: TObserver) -> Observable {
         return _tap(self, observer.onNext, observer.onError, observer.onCompleted)
     }
 }

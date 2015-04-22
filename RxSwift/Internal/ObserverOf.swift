@@ -47,7 +47,7 @@ internal class ObserverOf<T>: IObserver {
     private var objectIdentifier: ObjectIdentifier?
 }
 
-internal class WeakObserverOf<T>: ObserverOf<T> {
+internal final class WeakObserverOf<T>: ObserverOf<T> {
     init<TObserver: IObserver where TObserver.Input == Input>(
         _ observer: TObserver,
         _ bindNext: TObserver -> Input -> (),

@@ -18,7 +18,7 @@ public extension Observable {
     
     :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func map<TResult>(selector: Output -> TResult) -> Observable<TResult> {
+    public final func map<TResult>(selector: Output -> TResult) -> Observable<TResult> {
         return _map(self, selector)
     }
     
@@ -29,7 +29,7 @@ public extension Observable {
     
     :returns: An observable sequence whose elements are the result of invoking the transform function on each element of source.
     */
-    public func select<TResult>(selector: (Output, Int) -> TResult) -> Observable<TResult> {
+    public final func select<TResult>(selector: (Output, Int) -> TResult) -> Observable<TResult> {
         return _select(self, selector)
     }
 }

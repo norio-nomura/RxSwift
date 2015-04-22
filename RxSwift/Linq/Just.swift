@@ -18,11 +18,11 @@ public extension Observable {
     
     :returns: An observable sequence containing the single specified element.
     */
-    public class func just(value: Output) -> Observable {
+    public static func just(value: Output) -> Observable {
         return _just(value)
     }
     
-    public class func returnValue(value: Output) -> Observable {
+    public static func returnValue(value: Output) -> Observable {
         return _just(value)
     }
     
@@ -34,11 +34,11 @@ public extension Observable {
     
     :returns: An observable sequence containing the single specified element.
     */
-    public class func just(value: Output, scheduler: IScheduler) -> Observable {
+    public static func just(value: Output, scheduler: IScheduler) -> Observable {
         return _just(value, scheduler: scheduler)
     }
     
-    public class func returnValue(value: Output, scheduler: IScheduler) -> Observable {
+    public static func returnValue(value: Output, scheduler: IScheduler) -> Observable {
         return _just(value, scheduler: scheduler)
     }
 }
@@ -80,7 +80,7 @@ private func _just<T>(value: T, scheduler: IScheduler = Scheduler.immediate) -> 
     return Just(value, scheduler)
 }
 
-private class Just<TResult>: Producer<TResult> {
+private final class Just<TResult>: Producer<TResult> {
     let value: TResult
     let scheduler: IScheduler
 
@@ -96,7 +96,7 @@ private class Just<TResult>: Producer<TResult> {
     }
 }
 
-private class JustSink<TResult>: Sink<TResult> {
+private final class JustSink<TResult>: Sink<TResult> {
     let parent: Just<TResult>
     
     init<TObserver : IObserver where TObserver.Input == TResult>(parent: Just<TResult>, observer: TObserver, cancel: IDisposable?) {

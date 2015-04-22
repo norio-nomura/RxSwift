@@ -118,8 +118,8 @@ public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converte
     }
     
     // MARK: internal
-    private(set) var clock: TAbsolute
-    private(set) var isEnabled = false
+    private(set) final var clock: TAbsolute
+    private(set) final var isEnabled = false
 }
 
 public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative, Converter: VirtualTimeConverter where Converter.AbsoluteTime == TAbsolute, Converter.RelativeTime == TRelative>: VirtualTimeSchedulerBase<TAbsolute, TRelative, Converter> {

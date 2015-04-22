@@ -21,7 +21,7 @@ internal class ObservableBase<T>: Observable<T> {
     }
     
     // MARK: private
-    private func scheduledSubscribe(scheduler: IScheduler, autoDetachObserver: AutoDetachObserver<Output>) -> IDisposable? {
+    private final func scheduledSubscribe(scheduler: IScheduler, autoDetachObserver: AutoDetachObserver<Output>) -> IDisposable? {
         autoDetachObserver.disposable = subscribeCore(autoDetachObserver)
         return nil
     }

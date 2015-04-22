@@ -48,7 +48,7 @@ public class ScheduledItemBase<TAbsolute: Comparable>: IScheduledItem {
     let _disposable = SingleAssignmentDisposable()
 }
 
-public class ScheduledItem<TAbsolute: Comparable>: ScheduledItemBase<TAbsolute> {
+public final class ScheduledItem<TAbsolute: Comparable>: ScheduledItemBase<TAbsolute> {
     public init(scheduler: IScheduler, action: IScheduler -> IDisposable?, dueTime: TAbsolute) {
         self.scheduler = scheduler
         self.action = action

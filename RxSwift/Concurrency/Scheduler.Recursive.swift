@@ -10,13 +10,13 @@ import Foundation
 
 // MARK: public
 extension Scheduler {
-    public func schedule(action: (() -> ()) -> ()) -> IDisposable? {
+    public final func schedule(action: (() -> ()) -> ()) -> IDisposable? {
         return schedule(state: action) {
             (_action, _self) in _action {_self(_action)}
         }
     }
     
-    public func schedule<TState>(#state: TState, action: (TState, TState -> ()) -> ()) ->  IDisposable? {
+    public final func schedule<TState>(#state: TState, action: (TState, TState -> ()) -> ()) ->  IDisposable? {
         return schedule(state: (state: state, action: action), action: invokeRec1)
     }
 }

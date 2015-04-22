@@ -25,12 +25,9 @@ public class Producer<T>: Observable<T>, IProducer {
         
         var d = CompositeDisposable(state.sink, state.subscription)
         
-        var sink = SingleAssignmentDisposable()
-        var subscription = SingleAssignmentDisposable()
-        
         Scheduler.immediate.schedule(state: state, action: run)
         
-        return CompositeDisposable(sink, subscription)
+        return d
     }
     
     // MARK: internal
@@ -39,13 +36,13 @@ public class Producer<T>: Observable<T>, IProducer {
     }
     
     // MARK: private
-    private func run<TObserver: IObserver where TObserver.Input == Output>(scheduler: IScheduler, x: State<TObserver>) -> IDisposable? {
-        x.subscription.disposable = run(x.observer, cancel: x.subscription, setSink: x.assign())
+    private final func run<TObserver: IObserver where TObserver.Input == Output>(scheduler: IScheduler, x: State<TObserver>) -> IDisposable? {
+        x.subscription.disposable = run(x.observer, cancel: x.subscription, setSink: x.assign)
         return nil
     }
 }
 
-private struct State<TObserver: IObserver> {
+private final class State<TObserver: IObserver> {
     let observer: TObserver
     let sink = SingleAssignmentDisposable()
     let subscription = SingleAssignmentDisposable()
@@ -54,10 +51,8 @@ private struct State<TObserver: IObserver> {
         self.observer = observer
     }
     
-    func assign() -> IDisposable? ->  () {
-        return {
-            self.sink.disposable = $0
-        }
+    func assign(s: IDisposable?) ->  () {
+        sink.disposable = s
     }
 }
 

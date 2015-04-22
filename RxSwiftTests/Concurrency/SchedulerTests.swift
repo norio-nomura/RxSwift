@@ -8,7 +8,6 @@
 
 import Foundation
 import XCTest
-import RxSwift
 
 class SchedulerTests: XCTestCase {
 

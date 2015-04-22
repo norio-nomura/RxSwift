@@ -54,7 +54,7 @@ class VirtualTimeSchedulerTests: XCTestCase {
     func testVirtual_ScheduleAction() {
         var ran = false
         var scheduler = VirtualSchedulerTestScheduler("")
-        schedule(scheduler) {
+        scheduler.schedule {
             ran = true
         }
         scheduler.start()

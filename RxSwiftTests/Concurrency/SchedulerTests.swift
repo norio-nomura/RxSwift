@@ -24,14 +24,14 @@ class SchedulerTests: XCTestCase {
     func testScheduleNonRecursive() {
         let ms = MyScheduler()
         var res = false
-        schedule(ms) {() in res = true}
+        ms.schedule {res = true}
         XCTAssertTrue(res)
     }
     
     func testSchedulerRecursive() {
         let ms = MyScheduler()
         var i = 0;
-        schedule(ms) {(action: () -> ()) -> () in
+        ms.schedule {(action: () -> ()) -> () in
             if ++i < 10 {
                 action()
             }
@@ -39,26 +39,30 @@ class SchedulerTests: XCTestCase {
         XCTAssertEqual(10, i)
     }
     
-    class MyScheduler: IScheduler {
-        var now: NSDate
+    private class MyScheduler: Scheduler {
+        var _now: NSDate
         
         init(now: NSDate = NSDate()) {
-            self.now = now
+            _now = now
         }
         
-        func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        // MARK: IScheduler
+        
+        override var now: NSDate {
+            return _now
+        }
+        
+        override func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
             return action(self, state)
         }
         
-        var check: (Any, NSTimeInterval, Any -> ()) -> () = {_,_,_ in}
-        var waitCycles: NSTimeInterval = 0
-        
-        func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+        override func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
             check(state, dueTime) { action(self, $0 as! TState) }
             waitCycles += dueTime
             return action(self, state)
         }
 
+        var check: (Any, NSTimeInterval, Any -> ()) -> () = {_,_,_ in}
+        var waitCycles: NSTimeInterval = 0
     }
-
 }

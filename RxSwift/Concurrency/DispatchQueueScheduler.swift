@@ -8,18 +8,15 @@
 
 import Foundation
 
-public final class DispatchQueueScheduler: IScheduler {
-    public var now: NSDate {
-        return Scheduler.now
-    }
-
+public final class DispatchQueueScheduler: Scheduler {
     private let queue = dispatch_queue_create("io.github.norio-nomura.RxSwift", DISPATCH_QUEUE_SERIAL)
     
     public init(_ queue: dispatch_queue_t) {
         dispatch_set_target_queue(self.queue, queue)
     }
     
-    public func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    // MARK: ISchedulerCore
+    public override func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         dispatch_async(queue) {
             if !m.isDisposed {
@@ -29,7 +26,7 @@ public final class DispatchQueueScheduler: IScheduler {
         return m
     }
 
-    public func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
+    public override func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable? {
         var m = SingleAssignmentDisposable()
         dispatch_after(dueTime.dispatchTimeFromNow(), queue) {
             if !m.isDisposed {

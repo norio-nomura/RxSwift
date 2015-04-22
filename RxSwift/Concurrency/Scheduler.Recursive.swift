@@ -8,16 +8,20 @@
 
 import Foundation
 
-public func schedule(scheduler: IScheduler, action: (() -> ()) -> ()) -> IDisposable? {
-    return schedule(scheduler, action) {
-        (_action, _self) in _action {_self(_action)}
+// MARK: public
+extension Scheduler {
+    public func schedule(action: (() -> ()) -> ()) -> IDisposable? {
+        return schedule(state: action) {
+            (_action, _self) in _action {_self(_action)}
+        }
+    }
+    
+    public func schedule<TState>(#state: TState, action: (TState, TState -> ()) -> ()) ->  IDisposable? {
+        return schedule(state: (state: state, action: action), action: invokeRec1)
     }
 }
 
-public func schedule<TState>(scheduler: IScheduler, state: TState, action: (TState, TState -> ()) -> ()) ->  IDisposable? {
-    return scheduler.schedule(state: (state: state, action: action), action: invokeRec1)
-}
-
+// MARK: private
 private func invokeRec1<TState>(scheduler: IScheduler, pair: (state: TState, action: (TState, TState -> ()) -> ())) -> IDisposable? {
     var group = CompositeDisposable()
     var lock = SpinLock()

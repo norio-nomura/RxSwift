@@ -17,10 +17,10 @@ public protocol VirtualTimeConverter {
     static func toRelative(timeInterval: NSTimeInterval) -> RelativeTime
 }
 
-public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converter: VirtualTimeConverter where Converter.AbsoluteTime == TAbsolute, Converter.RelativeTime == TRelative>: IScheduler {
+public class VirtualTimeSchedulerBase<TAbsolute: Comparable, TRelative, Converter: VirtualTimeConverter where Converter.AbsoluteTime == TAbsolute, Converter.RelativeTime == TRelative>: Scheduler {
     
     // MARK: IScheduler
-    public var now: NSDate {
+    public override var now: NSDate {
         return Converter.toDate(clock)
     }
     

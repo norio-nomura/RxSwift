@@ -8,14 +8,20 @@
 
 import Foundation
 
-public protocol IScheduler: class {
-    var now: NSDate {get}
-    
+public protocol ISchedulerCore: class {
     func schedule<TState>(#state: TState, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
     func schedule<TState>(#state: TState, dueTime: NSTimeInterval, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
     
     // Is absolute time scheduler needed?
     //    func schedule<TState>(state: TState, dueTime: NSDate, action: (IScheduler, TState) -> IDisposable?) -> IDisposable?
+}
+
+public protocol IScheduler: ISchedulerCore {
+    var now: NSDate {get}
+    
+    // Scheduler.Simple.cs
+    func schedule(#action: () -> ()) -> IDisposable?
+    func schedule(#dueTime: NSTimeInterval, action: () -> ()) -> IDisposable?
 }
 
 public protocol ISchedulerPeriodic: class {

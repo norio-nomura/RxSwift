@@ -105,7 +105,7 @@ private class JustSink<TResult>: Sink<TResult> {
     }
     
     func run() -> IDisposable? {
-        return schedule(parent.scheduler, invoke)
+        return parent.scheduler.schedule(action: invoke)
     }
     
     func invoke() {

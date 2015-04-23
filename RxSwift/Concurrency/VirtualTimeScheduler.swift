@@ -164,3 +164,19 @@ public class VirtualTimeScheduler<TAbsolute: Comparable, TRelative, Converter: V
     private var queue = [ScheduledItemBase<TAbsolute>]()
     private let spinLock = SpinLock()
 }
+
+extension VirtualTimeScheduler {
+    public final func scheduleRelative(#dueTime: TRelative, action: () -> ()) -> IDisposable? {
+        return scheduleRelative(state: action, dueTime: dueTime) {_ in
+            action()
+            return nil
+        }
+    }
+    
+    public final func scheduleAbsolute(#dueTime: TAbsolute, action: () -> ()) -> IDisposable? {
+        return scheduleAbsolute(state: action, dueTime: dueTime) {_ in
+            action()
+            return nil
+        }
+    }
+}

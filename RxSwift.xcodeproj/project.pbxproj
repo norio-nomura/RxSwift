@@ -170,6 +170,20 @@
 		6CFEA7B91AE9272D00C312BB /* VirtualTimeSchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE201AE50388000935BB /* VirtualTimeSchedulerTests.swift */; };
 		6CFEA7BA1AE9273100C312BB /* RxSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDF75C1ACBE5F300C16A79 /* RxSwiftTests.swift */; };
 		6CFEA7BB1AE9273700C312BB /* ObserverTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C8BEE1A1AE3BD65000935BB /* ObserverTests.swift */; };
+		6CFEA7BE1AE9285F00C312BB /* DefaultDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BC1AE9285F00C312BB /* DefaultDisposable.swift */; };
+		6CFEA7BF1AE9285F00C312BB /* DefaultDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BC1AE9285F00C312BB /* DefaultDisposable.swift */; };
+		6CFEA7C01AE9285F00C312BB /* DefaultDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BC1AE9285F00C312BB /* DefaultDisposable.swift */; };
+		6CFEA7C11AE9285F00C312BB /* DefaultDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BC1AE9285F00C312BB /* DefaultDisposable.swift */; };
+		6CFEA7C21AE9285F00C312BB /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BD1AE9285F00C312BB /* BooleanDisposable.swift */; };
+		6CFEA7C31AE9285F00C312BB /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BD1AE9285F00C312BB /* BooleanDisposable.swift */; };
+		6CFEA7C41AE9285F00C312BB /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BD1AE9285F00C312BB /* BooleanDisposable.swift */; };
+		6CFEA7C51AE9285F00C312BB /* BooleanDisposable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7BD1AE9285F00C312BB /* BooleanDisposable.swift */; };
+		6CFEA7C91AE9288F00C312BB /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C81AE9288F00C312BB /* TestScheduler.swift */; };
+		6CFEA7CA1AE9288F00C312BB /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C81AE9288F00C312BB /* TestScheduler.swift */; };
+		6CFEA7CB1AE9288F00C312BB /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C81AE9288F00C312BB /* TestScheduler.swift */; };
+		6CFEA7CC1AE9288F00C312BB /* TestScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C81AE9288F00C312BB /* TestScheduler.swift */; };
+		6CFEA7CE1AE928AB00C312BB /* DisposableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7CD1AE928AB00C312BB /* DisposableTests.swift */; };
+		6CFEA7CF1AE928AB00C312BB /* DisposableTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7CD1AE928AB00C312BB /* DisposableTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -266,6 +280,11 @@
 		6CDDF7681ACBE60600C16A79 /* ObserverBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObserverBase.swift; sourceTree = "<group>"; };
 		6CDDF7691ACBE60600C16A79 /* Rx.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rx.swift; sourceTree = "<group>"; };
 		6CEF61201AE287BC0095C3D5 /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		6CFEA7BC1AE9285F00C312BB /* DefaultDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DefaultDisposable.swift; sourceTree = "<group>"; };
+		6CFEA7BD1AE9285F00C312BB /* BooleanDisposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooleanDisposable.swift; sourceTree = "<group>"; };
+		6CFEA7C61AE9287800C312BB /* Range.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Range.swift; sourceTree = "<group>"; };
+		6CFEA7C81AE9288F00C312BB /* TestScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestScheduler.swift; sourceTree = "<group>"; };
+		6CFEA7CD1AE928AB00C312BB /* DisposableTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DisposableTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,7 +488,9 @@
 			isa = PBXGroup;
 			children = (
 				6CA6F22A1ADD1935001C5D6C /* AnonymousDisposable.swift */,
+				6CFEA7BD1AE9285F00C312BB /* BooleanDisposable.swift */,
 				6CA6F2261ADD181B001C5D6C /* CompositeDisposable.swift */,
+				6CFEA7BC1AE9285F00C312BB /* DefaultDisposable.swift */,
 				6CA959671ADE4ACD0024262D /* Disposable.swift */,
 				6CA6F2241ADD17FD001C5D6C /* SingleAssignmentDisposable.swift */,
 			);
@@ -481,6 +502,7 @@
 			children = (
 				6C1A12A41ACCBF1300CACC82 /* Just.swift */,
 				6CA959651ADE49540024262D /* Producer.swift */,
+				6CFEA7C61AE9287800C312BB /* Range.swift */,
 				6CCD1A191ACC38CC0075F15C /* Select.swift */,
 				6C5DD0531ADE559B00FEC7BB /* Sink.swift */,
 				6C5656181AE1492E00166A89 /* Tap.swift */,
@@ -532,6 +554,7 @@
 				6CDDF74F1ACBE5F300C16A79 /* RxSwift.h */,
 				6C8685F61AD52E03009A86F3 /* Internal */,
 				6C2201F11ADF961E005924ED /* Subjects */,
+				6CFEA7C71AE9288F00C312BB /* Testing */,
 				6CDDF74D1ACBE5F300C16A79 /* Supporting Files */,
 			);
 			path = RxSwift;
@@ -550,6 +573,7 @@
 			children = (
 				6C577FCF1ADBD28C000CFCB9 /* Concurrency */,
 				6CDDF75C1ACBE5F300C16A79 /* RxSwiftTests.swift */,
+				6CFEA7CD1AE928AB00C312BB /* DisposableTests.swift */,
 				6C8BEE1A1AE3BD65000935BB /* ObserverTests.swift */,
 				6C2423C91AE0D357006E3DE7 /* Internal */,
 				6CDDF75A1ACBE5F300C16A79 /* Supporting Files */,
@@ -563,6 +587,14 @@
 				6CDDF75B1ACBE5F300C16A79 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		6CFEA7C71AE9288F00C312BB /* Testing */ = {
+			isa = PBXGroup;
+			children = (
+				6CFEA7C81AE9288F00C312BB /* TestScheduler.swift */,
+			);
+			path = Testing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -740,6 +772,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CFEA7801AE926A400C312BB /* SpinLock.swift in Sources */,
+				6CFEA7C01AE9285F00C312BB /* DefaultDisposable.swift in Sources */,
 				6CFEA7B31AE9271500C312BB /* Subject.swift in Sources */,
 				6CFEA77E1AE926A000C312BB /* Scheduler.swift in Sources */,
 				6CFEA7741AE9268D00C312BB /* AsyncLock.swift in Sources */,
@@ -747,6 +780,7 @@
 				6CFEA78C1AE926BF00C312BB /* SingleAssignmentDisposable.swift in Sources */,
 				6CFEA7AB1AE9270400C312BB /* NSTimeInterval+RxSwift.swift in Sources */,
 				6CFEA7841AE926AB00C312BB /* VirtualTimeScheduler.swift in Sources */,
+				6CFEA7CB1AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6CFEA7701AE9268600C312BB /* IDisposable.swift in Sources */,
 				6CFEA7721AE9268A00C312BB /* IScheduler.swift in Sources */,
 				6CFEA7821AE926A700C312BB /* Stopwatch.swift in Sources */,
@@ -757,6 +791,7 @@
 				6CFEA7B11AE9270F00C312BB /* Utils.swift in Sources */,
 				6CFEA79E1AE926E200C312BB /* Observable.swift in Sources */,
 				6CFEA7A91AE9270000C312BB /* AutoDetachObserver.swift in Sources */,
+				6CFEA7C41AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
 				6CFEA7901AE926C600C312BB /* Producer.swift in Sources */,
 				6CFEA76C1AE9267F00C312BB /* IObserver.swift in Sources */,
 				6CFEA7861AE926AF00C312BB /* AnonymousDisposable.swift in Sources */,
@@ -785,13 +820,16 @@
 				6CFEA7871AE926AF00C312BB /* AnonymousDisposable.swift in Sources */,
 				6CFEA7791AE9269500C312BB /* ImmediateScheduler.swift in Sources */,
 				6CFEA7BB1AE9273700C312BB /* ObserverTests.swift in Sources */,
+				6CFEA7C51AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
 				6CFEA7B61AE9272300C312BB /* SchedulerTests.swift in Sources */,
 				6CFEA7771AE9269200C312BB /* DispatchQueueScheduler.swift in Sources */,
 				6CFEA7A31AE926E900C312BB /* Observer.Extensions.swift in Sources */,
 				6CFEA7B21AE9271000C312BB /* Utils.swift in Sources */,
 				6CFEA77F1AE926A100C312BB /* Scheduler.swift in Sources */,
 				6CFEA7891AE926B500C312BB /* CompositeDisposable.swift in Sources */,
+				6CFEA7CC1AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6CFEA7731AE9268A00C312BB /* IScheduler.swift in Sources */,
+				6CFEA7CF1AE928AB00C312BB /* DisposableTests.swift in Sources */,
 				6CFEA7AA1AE9270100C312BB /* AutoDetachObserver.swift in Sources */,
 				6CFEA7831AE926A800C312BB /* Stopwatch.swift in Sources */,
 				6CFEA7931AE926CE00C312BB /* Select.swift in Sources */,
@@ -801,6 +839,7 @@
 				6CFEA7B41AE9271600C312BB /* Subject.swift in Sources */,
 				6CFEA7A71AE926F100C312BB /* Rx.swift in Sources */,
 				6CFEA7B81AE9272900C312BB /* StopwatchTests.swift in Sources */,
+				6CFEA7C11AE9285F00C312BB /* DefaultDisposable.swift in Sources */,
 				6CFEA7711AE9268700C312BB /* IDisposable.swift in Sources */,
 				6CFEA7BA1AE9273100C312BB /* RxSwiftTests.swift in Sources */,
 				6CFEA78D1AE926C000C312BB /* SingleAssignmentDisposable.swift in Sources */,
@@ -831,6 +870,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6CA959661ADE49540024262D /* Producer.swift in Sources */,
+				6CFEA7BE1AE9285F00C312BB /* DefaultDisposable.swift in Sources */,
 				6CA9596C1ADE4B5A0024262D /* AutoDetachObserver.swift in Sources */,
 				6C8BEE191AE3A73E000935BB /* Observer.Extensions.swift in Sources */,
 				6C56645F1ADE8CDC0081408F /* ObserverOf.swift in Sources */,
@@ -838,6 +878,7 @@
 				6C577FD61ADC0F9E000CFCB9 /* DispatchQueueScheduler.swift in Sources */,
 				6CA6F22D1ADD1A0B001C5D6C /* NSTimeInterval+RxSwift.swift in Sources */,
 				6CA6F2251ADD17FD001C5D6C /* SingleAssignmentDisposable.swift in Sources */,
+				6CFEA7C91AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6CDDF76C1ACBE60600C16A79 /* Observable.swift in Sources */,
 				6CDDF76E1ACBE60600C16A79 /* Rx.swift in Sources */,
 				6C2201EF1ADF74FB005924ED /* ObservableOf.swift in Sources */,
@@ -848,6 +889,7 @@
 				6C5656191AE1492E00166A89 /* Tap.swift in Sources */,
 				6C2201F81ADFB24A005924ED /* IObservable.swift in Sources */,
 				6C5DD0551ADE5C6C00FEC7BB /* Sink.swift in Sources */,
+				6CFEA7C21AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
 				6C2201F31ADF9660005924ED /* Subject.swift in Sources */,
 				6CBE5A291AE0F34400936774 /* IScheduler.swift in Sources */,
 				6C577FCE1ADBC38D000CFCB9 /* AsyncLock.swift in Sources */,
@@ -876,13 +918,16 @@
 				6C8BEE341AE5106F000935BB /* Disposable.swift in Sources */,
 				6CB1C8811AE666260008E1C2 /* AnonymousObservable.swift in Sources */,
 				6CB1C87E1AE6661A0008E1C2 /* Producer.swift in Sources */,
+				6CFEA7C31AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
 				6CB1C8791AE665FB0008E1C2 /* IObservable.swift in Sources */,
 				6CDDF75D1ACBE5F300C16A79 /* RxSwiftTests.swift in Sources */,
 				6C8BEE2E1AE51014000935BB /* NSTimeInterval+RxSwift.swift in Sources */,
 				6CB1C8861AE666370008E1C2 /* Observer.Extensions.swift in Sources */,
 				6CB1C8891AE666480008E1C2 /* ObserverOf.swift in Sources */,
 				6C2423CD1AE0D5B2006E3DE7 /* StopwatchTests.swift in Sources */,
+				6CFEA7CA1AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6C8BEE3A1AE513D2000935BB /* Scheduler.Recursive.swift in Sources */,
+				6CFEA7CE1AE928AB00C312BB /* DisposableTests.swift in Sources */,
 				6CB1C87D1AE666160008E1C2 /* Just.swift in Sources */,
 				6C8BEE1B1AE3BD65000935BB /* ObserverTests.swift in Sources */,
 				6C8BEE2D1AE51008000935BB /* Stopwatch.swift in Sources */,
@@ -892,6 +937,7 @@
 				6C8BEE351AE51076000935BB /* AnonymousDisposable.swift in Sources */,
 				6CB1C8871AE6663D0008E1C2 /* AutoDetachObserver.swift in Sources */,
 				6CB1C8851AE666340008E1C2 /* ObserverBase.swift in Sources */,
+				6CFEA7BF1AE9285F00C312BB /* DefaultDisposable.swift in Sources */,
 				6C8BEE361AE51086000935BB /* SingleAssignmentDisposable.swift in Sources */,
 				6C8BEE2C1AE50FFF000935BB /* SpinLock.swift in Sources */,
 				6CB1C8881AE666430008E1C2 /* ObservableOf.swift in Sources */,

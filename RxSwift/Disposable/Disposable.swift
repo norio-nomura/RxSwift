@@ -9,6 +9,10 @@
 import Foundation
 
 public struct Disposable {
+    public static var empty: IDisposable {
+        return DefaultDisposable.instance
+    }
+    
     public static func create(action: () -> ()) -> IDisposable {
         return AnonymousDisposable(action)
     }

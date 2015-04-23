@@ -25,3 +25,7 @@ public protocol IScheduler: class {
 public protocol ISchedulerPeriodic: class {
     func schedule<TState>(#state: TState, period: NSTimeInterval, action: TState -> TState) -> IDisposable?
 }
+
+public protocol ISchedulerLongRunning: class {
+    func scheduleLongRunning<TState>(#state: TState, action: (TState, ICancelable) -> ()) -> IDisposable?
+}

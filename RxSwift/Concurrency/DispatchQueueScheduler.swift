@@ -8,11 +8,11 @@
 
 import Foundation
 
-public final class DispatchQueueScheduler: Scheduler {
-    private let queue = dispatch_queue_create("io.github.norio-nomura.RxSwift", DISPATCH_QUEUE_SERIAL)
+public class DispatchQueueScheduler: Scheduler {
+    private let queue: dispatch_queue_t
     
     public init(_ queue: dispatch_queue_t) {
-        dispatch_set_target_queue(self.queue, queue)
+        self.queue = queue
     }
     
     // MARK: scheduleCore
@@ -34,5 +34,51 @@ public final class DispatchQueueScheduler: Scheduler {
             }
         }
         return m
+    }
+}
+
+public final class MainQueueScheduler: DispatchQueueScheduler {
+    public static let instance = MainQueueScheduler()
+    
+    public init() {
+        super.init(dispatch_get_main_queue())
+    }
+}
+
+public final class SerialQueueScheduler: DispatchQueueScheduler {
+    public static let instance = SerialQueueScheduler()
+    
+    public init() {
+        super.init(dispatch_queue_create("io.github.norio-nomura.RxSwift", DISPATCH_QUEUE_SERIAL))
+    }
+    
+    public init(_ label: String) {
+        super.init(dispatch_queue_create(label, DISPATCH_QUEUE_SERIAL))
+    }
+}
+
+public final class ConcurrentQueueScheduler: DispatchQueueScheduler {
+    public static let instance = ConcurrentQueueScheduler()
+    
+    public convenience init() {
+        self.init(DISPATCH_QUEUE_PRIORITY_DEFAULT)
+    }
+    
+    public init(_ qos_class: qos_class_t) {
+        super.init(dispatch_get_global_queue(qos_class, 0))
+    }
+    
+    public init(_ priority: dispatch_queue_priority_t) {
+        super.init(dispatch_get_global_queue(priority, 0))
+    }
+}
+
+extension Scheduler: ISchedulerLongRunning {
+    public func scheduleLongRunning<TState>(#state: TState, action: (TState, ICancelable) -> ()) -> IDisposable? {
+        var d = BooleanDisposable()
+        dispatch_async(ConcurrentQueueScheduler.instance.queue) {
+            action(state, d)
+        }
+        return d
     }
 }

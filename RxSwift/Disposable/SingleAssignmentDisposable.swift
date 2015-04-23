@@ -40,7 +40,9 @@ internal final class SingleAssignmentDisposable: ICancelable {
                     _disposable = newValue
                 }
             }
-            oldValue?.dispose()
+            if oldValue != nil {
+                fatalError("DISPOSABLE_ALREADY_ASSIGNED")
+            }
             if shouldDispose {
                 newValue?.dispose()
             }

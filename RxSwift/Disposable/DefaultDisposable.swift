@@ -12,4 +12,5 @@ public final class DefaultDisposable: IDisposable {
     public static let instance = DefaultDisposable()
     public func dispose() {
     }
+    private init() {}
 }

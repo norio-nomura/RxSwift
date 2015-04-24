@@ -8,9 +8,9 @@
 
 import Foundation
 
-internal final class SingleAssignmentDisposable: ICancelable {
+public final class SingleAssignmentDisposable: ICancelable {
     // MARK: ICancelable
-    func dispose() {
+    public func dispose() {
         var old: IDisposable? = nil
         spinLock.wait {
             if !isDisposed {
@@ -22,12 +22,12 @@ internal final class SingleAssignmentDisposable: ICancelable {
         old?.dispose()
     }
     
-    private(set) var isDisposed = false
+    public private(set) var isDisposed = false
         
     // MARK: internal
     init() {}
 
-    var disposable: IDisposable? {
+    public var disposable: IDisposable? {
         get {
             return _disposable
         }

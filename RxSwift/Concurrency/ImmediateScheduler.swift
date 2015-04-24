@@ -8,7 +8,7 @@
 
 import Foundation
 
-public final class ImmediateScheduler: Scheduler {
+public final class ImmediateScheduler: LocalScheduler {
     // MARK: scheduleCore
     override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
         return action(AsyncLockScheduler())
@@ -20,7 +20,7 @@ public final class ImmediateScheduler: Scheduler {
     }
 }
 
-internal final class AsyncLockScheduler: Scheduler {
+internal final class AsyncLockScheduler: LocalScheduler {
     private var lock = AsyncLock()
     
     // MARK: scheduleCore

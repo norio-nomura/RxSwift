@@ -11,6 +11,10 @@ import Foundation
 public typealias TestScheduler = TestSchedulerBase<UInt64, UInt64, TestSchedulerTimeConverter>
 
 public class TestSchedulerBase<TAbsolute: protocol<Comparable, UnsignedIntegerType>, TRelative: UnsignedIntegerType, Converter: VirtualTimeConverter where Converter.AbsoluteTime == TAbsolute, Converter.RelativeTime == TRelative>: VirtualTimeScheduler<TAbsolute, TRelative, Converter> {
+    public init() {
+        super.init(0)
+    }
+    
     public override func scheduleAbsolute<TState>(#state: TState, var dueTime: TAbsolute, action: IScheduler -> IDisposable?) -> IDisposable? {
         if dueTime < clock {
             dueTime = clock + 1

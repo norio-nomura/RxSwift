@@ -81,6 +81,10 @@
 		6CB1C8881AE666430008E1C2 /* ObservableOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201EE1ADF74FB005924ED /* ObservableOf.swift */; };
 		6CB1C8891AE666480008E1C2 /* ObserverOf.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C56645E1ADE8CDC0081408F /* ObserverOf.swift */; };
 		6CB1C88A1AE6664E0008E1C2 /* Subject.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C2201F21ADF9660005924ED /* Subject.swift */; };
+		6CBD96CA1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
+		6CBD96CB1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
+		6CBD96CC1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
+		6CBD96CD1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
 		6CBE5A291AE0F34400936774 /* IScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A281AE0F34400936774 /* IScheduler.swift */; };
 		6CBE5A2B1AE0F5AA00936774 /* SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A2A1AE0F5AA00936774 /* SchedulerTests.swift */; };
 		6CBE5A2E1AE0FFBE00936774 /* Scheduler.Recursive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A2D1AE0FFBE00936774 /* Scheduler.Recursive.swift */; };
@@ -266,6 +270,7 @@
 		6CA959671ADE4ACD0024262D /* Disposable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Disposable.swift; sourceTree = "<group>"; };
 		6CA959691ADE4B030024262D /* ObservableBase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObservableBase.swift; sourceTree = "<group>"; };
 		6CA9596B1ADE4B5A0024262D /* AutoDetachObserver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutoDetachObserver.swift; sourceTree = "<group>"; };
+		6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocalScheduler.swift; sourceTree = "<group>"; };
 		6CBE5A281AE0F34400936774 /* IScheduler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IScheduler.swift; sourceTree = "<group>"; };
 		6CBE5A2A1AE0F5AA00936774 /* SchedulerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerTests.swift; sourceTree = "<group>"; };
 		6CBE5A2D1AE0FFBE00936774 /* Scheduler.Recursive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.Recursive.swift; sourceTree = "<group>"; };
@@ -357,6 +362,7 @@
 				6C577FCD1ADBC38D000CFCB9 /* AsyncLock.swift */,
 				6C577FD51ADC0F9E000CFCB9 /* DispatchQueueScheduler.swift */,
 				6C577FC81ADB6D6A000CFCB9 /* ImmediateScheduler.swift */,
+				6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */,
 				6C8BEE1E1AE4F312000935BB /* ScheduledItem.swift */,
 				6CBE5A2D1AE0FFBE00936774 /* Scheduler.Recursive.swift */,
 				6C577FC41ADB4B7C000CFCB9 /* Scheduler.swift */,
@@ -785,6 +791,7 @@
 				6CFEA7721AE9268A00C312BB /* IScheduler.swift in Sources */,
 				6CFEA7821AE926A700C312BB /* Stopwatch.swift in Sources */,
 				6CFEA79A1AE926DB00C312BB /* AnonymousObserver.swift in Sources */,
+				6CBD96CC1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */,
 				6CFEA7981AE926D700C312BB /* AnonymousObservable.swift in Sources */,
 				6CFEA76E1AE9268200C312BB /* IObservable.swift in Sources */,
 				6CFEA7941AE926D100C312BB /* Sink.swift in Sources */,
@@ -830,6 +837,7 @@
 				6CFEA7CC1AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6CFEA7731AE9268A00C312BB /* IScheduler.swift in Sources */,
 				6CFEA7CF1AE928AB00C312BB /* DisposableTests.swift in Sources */,
+				6CBD96CD1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */,
 				6CFEA7AA1AE9270100C312BB /* AutoDetachObserver.swift in Sources */,
 				6CFEA7831AE926A800C312BB /* Stopwatch.swift in Sources */,
 				6CFEA7931AE926CE00C312BB /* Select.swift in Sources */,
@@ -883,6 +891,7 @@
 				6CDDF76E1ACBE60600C16A79 /* Rx.swift in Sources */,
 				6C2201EF1ADF74FB005924ED /* ObservableOf.swift in Sources */,
 				6CDDF76D1ACBE60600C16A79 /* ObserverBase.swift in Sources */,
+				6CBD96CA1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */,
 				6C8685FA1AD52EA1009A86F3 /* AnonymousObservable.swift in Sources */,
 				6C2201F61ADFADD8005924ED /* IObserver.swift in Sources */,
 				6CA9596A1ADE4B030024262D /* ObservableBase.swift in Sources */,
@@ -928,6 +937,7 @@
 				6CFEA7CA1AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6C8BEE3A1AE513D2000935BB /* Scheduler.Recursive.swift in Sources */,
 				6CFEA7CE1AE928AB00C312BB /* DisposableTests.swift in Sources */,
+				6CBD96CB1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */,
 				6CB1C87D1AE666160008E1C2 /* Just.swift in Sources */,
 				6C8BEE1B1AE3BD65000935BB /* ObserverTests.swift in Sources */,
 				6C8BEE2D1AE51008000935BB /* Stopwatch.swift in Sources */,

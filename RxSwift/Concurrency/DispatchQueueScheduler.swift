@@ -8,7 +8,7 @@
 
 import Foundation
 
-public class DispatchQueueScheduler: Scheduler {
+public class DispatchQueueScheduler: LocalScheduler {
     private let queue: dispatch_queue_t
     
     public init(_ queue: dispatch_queue_t) {
@@ -73,7 +73,13 @@ public final class ConcurrentQueueScheduler: DispatchQueueScheduler {
     }
 }
 
-extension Scheduler: ISchedulerLongRunning {
+extension Scheduler {
+    public final var asLongRunning: ISchedulerLongRunning? {
+        return self as? ISchedulerLongRunning
+    }
+}
+
+extension LocalScheduler: ISchedulerLongRunning {
     public func scheduleLongRunning<TState>(#state: TState, action: (TState, ICancelable) -> ()) -> IDisposable? {
         var d = BooleanDisposable()
         dispatch_async(ConcurrentQueueScheduler.instance.queue) {

@@ -85,6 +85,10 @@
 		6CBD96CB1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
 		6CBD96CC1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
 		6CBD96CD1AEA8A7D00E88ABE /* LocalScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96C91AEA8A7D00E88ABE /* LocalScheduler.swift */; };
+		6CBD96CE1AEA940200E88ABE /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C61AE9287800C312BB /* Range.swift */; };
+		6CBD96CF1AEA940300E88ABE /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C61AE9287800C312BB /* Range.swift */; };
+		6CBD96D01AEA940300E88ABE /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C61AE9287800C312BB /* Range.swift */; };
+		6CBD96D11AEA940400E88ABE /* Range.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CFEA7C61AE9287800C312BB /* Range.swift */; };
 		6CBD96D31AEA98C800E88ABE /* SchedulerDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96D21AEA98C800E88ABE /* SchedulerDefaults.swift */; };
 		6CBD96D41AEA98C800E88ABE /* SchedulerDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96D21AEA98C800E88ABE /* SchedulerDefaults.swift */; };
 		6CBD96D51AEA98C800E88ABE /* SchedulerDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBD96D21AEA98C800E88ABE /* SchedulerDefaults.swift */; };
@@ -803,6 +807,7 @@
 				6CFEA76E1AE9268200C312BB /* IObservable.swift in Sources */,
 				6CFEA7941AE926D100C312BB /* Sink.swift in Sources */,
 				6CFEA7B11AE9270F00C312BB /* Utils.swift in Sources */,
+				6CBD96D01AEA940300E88ABE /* Range.swift in Sources */,
 				6CFEA79E1AE926E200C312BB /* Observable.swift in Sources */,
 				6CFEA7A91AE9270000C312BB /* AutoDetachObserver.swift in Sources */,
 				6CFEA7C41AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
@@ -833,6 +838,7 @@
 				6CFEA76F1AE9268300C312BB /* IObservable.swift in Sources */,
 				6CFEA7871AE926AF00C312BB /* AnonymousDisposable.swift in Sources */,
 				6CFEA7791AE9269500C312BB /* ImmediateScheduler.swift in Sources */,
+				6CBD96D11AEA940400E88ABE /* Range.swift in Sources */,
 				6CFEA7BB1AE9273700C312BB /* ObserverTests.swift in Sources */,
 				6CFEA7C51AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
 				6CFEA7B61AE9272300C312BB /* SchedulerTests.swift in Sources */,
@@ -905,6 +911,7 @@
 				6C2201F61ADFADD8005924ED /* IObserver.swift in Sources */,
 				6CA9596A1ADE4B030024262D /* ObservableBase.swift in Sources */,
 				6C5656191AE1492E00166A89 /* Tap.swift in Sources */,
+				6CBD96CE1AEA940200E88ABE /* Range.swift in Sources */,
 				6C2201F81ADFB24A005924ED /* IObservable.swift in Sources */,
 				6C5DD0551ADE5C6C00FEC7BB /* Sink.swift in Sources */,
 				6CFEA7C21AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
@@ -935,6 +942,7 @@
 				6C4D4DEA1AE0992B00419821 /* SpinLockTests.swift in Sources */,
 				6C8BEE341AE5106F000935BB /* Disposable.swift in Sources */,
 				6CB1C8811AE666260008E1C2 /* AnonymousObservable.swift in Sources */,
+				6CBD96CF1AEA940300E88ABE /* Range.swift in Sources */,
 				6CB1C87E1AE6661A0008E1C2 /* Producer.swift in Sources */,
 				6CFEA7C31AE9285F00C312BB /* BooleanDisposable.swift in Sources */,
 				6CB1C8791AE665FB0008E1C2 /* IObservable.swift in Sources */,

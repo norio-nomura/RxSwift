@@ -96,6 +96,10 @@
 		6CBE5A291AE0F34400936774 /* IScheduler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A281AE0F34400936774 /* IScheduler.swift */; };
 		6CBE5A2B1AE0F5AA00936774 /* SchedulerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A2A1AE0F5AA00936774 /* SchedulerTests.swift */; };
 		6CBE5A2E1AE0FFBE00936774 /* Scheduler.Recursive.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CBE5A2D1AE0FFBE00936774 /* Scheduler.Recursive.swift */; };
+		6CCEF4681AF3835B0062C067 /* ToObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEF4671AF3835B0062C067 /* ToObservable.swift */; };
+		6CCEF4691AF3835B0062C067 /* ToObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEF4671AF3835B0062C067 /* ToObservable.swift */; };
+		6CCEF46A1AF3835B0062C067 /* ToObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEF4671AF3835B0062C067 /* ToObservable.swift */; };
+		6CCEF46B1AF3835B0062C067 /* ToObservable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CCEF4671AF3835B0062C067 /* ToObservable.swift */; };
 		6CDDF7501ACBE5F300C16A79 /* RxSwift.h in Headers */ = {isa = PBXBuildFile; fileRef = 6CDDF74F1ACBE5F300C16A79 /* RxSwift.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6CDDF7561ACBE5F300C16A79 /* RxSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6CDDF74A1ACBE5F300C16A79 /* RxSwift.framework */; };
 		6CDDF75D1ACBE5F300C16A79 /* RxSwiftTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CDDF75C1ACBE5F300C16A79 /* RxSwiftTests.swift */; };
@@ -284,6 +288,7 @@
 		6CBE5A2A1AE0F5AA00936774 /* SchedulerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SchedulerTests.swift; sourceTree = "<group>"; };
 		6CBE5A2D1AE0FFBE00936774 /* Scheduler.Recursive.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scheduler.Recursive.swift; sourceTree = "<group>"; };
 		6CCD1A191ACC38CC0075F15C /* Select.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Select.swift; sourceTree = "<group>"; };
+		6CCEF4671AF3835B0062C067 /* ToObservable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ToObservable.swift; sourceTree = "<group>"; };
 		6CDDF74A1ACBE5F300C16A79 /* RxSwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = RxSwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6CDDF74E1ACBE5F300C16A79 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6CDDF74F1ACBE5F300C16A79 /* RxSwift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RxSwift.h; sourceTree = "<group>"; };
@@ -522,6 +527,7 @@
 				6CCD1A191ACC38CC0075F15C /* Select.swift */,
 				6C5DD0531ADE559B00FEC7BB /* Sink.swift */,
 				6C5656181AE1492E00166A89 /* Tap.swift */,
+				6CCEF4671AF3835B0062C067 /* ToObservable.swift */,
 			);
 			path = Linq;
 			sourceTree = "<group>";
@@ -796,6 +802,7 @@
 				6CFEA78C1AE926BF00C312BB /* SingleAssignmentDisposable.swift in Sources */,
 				6CFEA7AB1AE9270400C312BB /* NSTimeInterval+RxSwift.swift in Sources */,
 				6CFEA7841AE926AB00C312BB /* VirtualTimeScheduler.swift in Sources */,
+				6CCEF46A1AF3835B0062C067 /* ToObservable.swift in Sources */,
 				6CFEA7CB1AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6CFEA7701AE9268600C312BB /* IDisposable.swift in Sources */,
 				6CFEA7721AE9268A00C312BB /* IScheduler.swift in Sources */,
@@ -882,6 +889,7 @@
 				6CFEA7971AE926D400C312BB /* Tap.swift in Sources */,
 				6CFEA79F1AE926E300C312BB /* Observable.swift in Sources */,
 				6CBD96D61AEA98C800E88ABE /* SchedulerDefaults.swift in Sources */,
+				6CCEF46B1AF3835B0062C067 /* ToObservable.swift in Sources */,
 				6CFEA79D1AE926DF00C312BB /* ObservableBase.swift in Sources */,
 				6CFEA78F1AE926C300C312BB /* Just.swift in Sources */,
 			);
@@ -900,6 +908,7 @@
 				6C577FD61ADC0F9E000CFCB9 /* DispatchQueueScheduler.swift in Sources */,
 				6CA6F22D1ADD1A0B001C5D6C /* NSTimeInterval+RxSwift.swift in Sources */,
 				6CA6F2251ADD17FD001C5D6C /* SingleAssignmentDisposable.swift in Sources */,
+				6CCEF4681AF3835B0062C067 /* ToObservable.swift in Sources */,
 				6CFEA7C91AE9288F00C312BB /* TestScheduler.swift in Sources */,
 				6CDDF76C1ACBE60600C16A79 /* Observable.swift in Sources */,
 				6CDDF76E1ACBE60600C16A79 /* Rx.swift in Sources */,
@@ -986,6 +995,7 @@
 				6CB1C88A1AE6664E0008E1C2 /* Subject.swift in Sources */,
 				6C8BEE211AE50388000935BB /* VirtualTimeSchedulerTests.swift in Sources */,
 				6CBD96D41AEA98C800E88ABE /* SchedulerDefaults.swift in Sources */,
+				6CCEF4691AF3835B0062C067 /* ToObservable.swift in Sources */,
 				6C8BEE3B1AE513D8000935BB /* CompositeDisposable.swift in Sources */,
 				6CB1C87F1AE6661E0008E1C2 /* Select.swift in Sources */,
 			);

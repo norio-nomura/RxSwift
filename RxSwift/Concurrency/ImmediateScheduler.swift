@@ -9,6 +9,8 @@
 import Foundation
 
 public final class ImmediateScheduler: LocalScheduler {
+    public static var instance = ImmediateScheduler()
+    
     // MARK: scheduleCore
     override func scheduleCore(#state: Any, action: IScheduler -> IDisposable?) -> IDisposable? {
         return action(AsyncLockScheduler())
